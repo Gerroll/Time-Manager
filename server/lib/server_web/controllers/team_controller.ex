@@ -12,11 +12,18 @@ defmodule ServerWeb.TeamController do
   end
 
   def create(conn, %{"team" => team_params}) do
-    with {:ok, %Team{} = team} <- GTeams.create_team(team_params) do
+    teams = GTeams.list_teams()
+    exist = Enum.any?(teams, fn(t) -> t.name == team_params["name"] end)
+    if !exist do
+      with {:ok, %Team{} = team} <- GTeams.create_team(team_params) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", team: team)
+      end
+    else
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.team_path(conn, :show, team))
-      |> render("show.json", team: team)
+      |> put_status(:bad_request)
+      |> json("KO")
     end
   end
 

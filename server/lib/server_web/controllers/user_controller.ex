@@ -11,12 +11,20 @@ defmodule ServerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- GUsers.create_user(user_params) do
+  def createUser(conn, %{"user" => user_params}) do
+    users = GUsers.list_users()
+    exist = Enum.any?(users, fn(u) -> u.email == user_params["email"] end)
+
+    if !exist do
+      with {:ok, %User{} = user} <- GUsers.create_user(user_params) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", user: user)
+      end
+    else
       conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> put_status(:bad_request)
+      |> json("KO")
     end
   end
 
@@ -39,5 +47,11 @@ defmodule ServerWeb.UserController do
     with {:ok, %User{}} <- GUsers.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+
+  def getUserList(conn, %{}) do
+    users = GUsers.list_users()
+    render(conn, "index.json", users: users)
   end
 end

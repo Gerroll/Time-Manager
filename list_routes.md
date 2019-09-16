@@ -1,0 +1,48 @@
+all:
+- create user acount
+
+
+users:
+# TODO - get user info from userID
+# TODO - update user account from userID
+# TODO - delete user account
+# TODO - create workingTime from userID and update workingTime start from userID
+# TODO - update workingTime end from userID
+# TODO - get all workingTime from userID (dashboard)
+
+
+managers, general managers:
+- create team 
+- get user list
+# TODO - update user team from userID
+# TODO - delete team from teamID
+
+# TODO - get team list from userID (managerID)
+# TODO - get user list from teamID
+# TODO - get workingTime averge team daily/weekly over given periode
+# TODO - get workingTime user daily/weekly over given periode
+# TODO - get dashboard of userID
+
+
+general managers:
+# TODO - get user list
+# TODO - update user rank from userID
+# TODO - get dashboard from userID
+# TODO - delete user from userID
+
+
+
+mix phx.new server --no-html --no-webpack
+
+mix phx.gen.json GTeams Team teams name:string
+
+mix phx.gen.json GUsers User users username:string email:string password:string team_id:references:teams rank:string
+
+mix phx.gen.json GWorkingtimes Workingtime workingtimes start:datetime end:datetime user_id:references:users
+
+
+
+## OLD CMD :
+##      mix phx.gen.json GRanks Rank ranks name:string
+##      mix phx.gen.json GUsers User users username:string email:string password:string team_id:references:teams rank_id:references:ranks
+

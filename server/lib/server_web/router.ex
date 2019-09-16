@@ -7,5 +7,18 @@ defmodule ServerWeb.Router do
 
   scope "/api", ServerWeb do
     pipe_through :api
+
+    post "/createUser", UserController, :createUser    
+
+    scope "/user" do
+    end
+
+    scope "/manager" do
+      get "/user_list", UserController, :getUserList
+      post "/team", TeamController, :create
+    end
+
+    scope "/general" do
+    end
   end
 end
