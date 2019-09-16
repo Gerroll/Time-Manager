@@ -6,7 +6,7 @@ defmodule Server.GWorkingtimes do
   import Ecto.Query, warn: false
   alias Server.Repo
 
-  alias Server.GWorkingtimes.Workingtimes
+  alias Server.GWorkingtimes.Workingtime
 
   @doc """
   Returns the list of workingtimes.
@@ -14,91 +14,91 @@ defmodule Server.GWorkingtimes do
   ## Examples
 
       iex> list_workingtimes()
-      [%Workingtimes{}, ...]
+      [%Workingtime{}, ...]
 
   """
   def list_workingtimes do
-    Repo.all(Workingtimes)
+    Repo.all(Workingtime)
   end
 
   @doc """
-  Gets a single workingtimes.
+  Gets a single workingtime.
 
-  Raises `Ecto.NoResultsError` if the Workingtimes does not exist.
+  Raises `Ecto.NoResultsError` if the Workingtime does not exist.
 
   ## Examples
 
-      iex> get_workingtimes!(123)
-      %Workingtimes{}
+      iex> get_workingtime!(123)
+      %Workingtime{}
 
-      iex> get_workingtimes!(456)
+      iex> get_workingtime!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_workingtimes!(id), do: Repo.get!(Workingtimes, id)
+  def get_workingtime!(id), do: Repo.get!(Workingtime, id)
 
   @doc """
-  Creates a workingtimes.
+  Creates a workingtime.
 
   ## Examples
 
-      iex> create_workingtimes(%{field: value})
-      {:ok, %Workingtimes{}}
+      iex> create_workingtime(%{field: value})
+      {:ok, %Workingtime{}}
 
-      iex> create_workingtimes(%{field: bad_value})
+      iex> create_workingtime(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_workingtimes(attrs \\ %{}) do
-    %Workingtimes{}
-    |> Workingtimes.changeset(attrs)
+  def create_workingtime(attrs \\ %{}) do
+    %Workingtime{}
+    |> Workingtime.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a workingtimes.
+  Updates a workingtime.
 
   ## Examples
 
-      iex> update_workingtimes(workingtimes, %{field: new_value})
-      {:ok, %Workingtimes{}}
+      iex> update_workingtime(workingtime, %{field: new_value})
+      {:ok, %Workingtime{}}
 
-      iex> update_workingtimes(workingtimes, %{field: bad_value})
+      iex> update_workingtime(workingtime, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_workingtimes(%Workingtimes{} = workingtimes, attrs) do
-    workingtimes
-    |> Workingtimes.changeset(attrs)
+  def update_workingtime(%Workingtime{} = workingtime, attrs) do
+    workingtime
+    |> Workingtime.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Workingtimes.
+  Deletes a Workingtime.
 
   ## Examples
 
-      iex> delete_workingtimes(workingtimes)
-      {:ok, %Workingtimes{}}
+      iex> delete_workingtime(workingtime)
+      {:ok, %Workingtime{}}
 
-      iex> delete_workingtimes(workingtimes)
+      iex> delete_workingtime(workingtime)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_workingtimes(%Workingtimes{} = workingtimes) do
-    Repo.delete(workingtimes)
+  def delete_workingtime(%Workingtime{} = workingtime) do
+    Repo.delete(workingtime)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking workingtimes changes.
+  Returns an `%Ecto.Changeset{}` for tracking workingtime changes.
 
   ## Examples
 
-      iex> change_workingtimes(workingtimes)
-      %Ecto.Changeset{source: %Workingtimes{}}
+      iex> change_workingtime(workingtime)
+      %Ecto.Changeset{source: %Workingtime{}}
 
   """
-  def change_workingtimes(%Workingtimes{} = workingtimes) do
-    Workingtimes.changeset(workingtimes, %{})
+  def change_workingtime(%Workingtime{} = workingtime) do
+    Workingtime.changeset(workingtime, %{})
   end
 end

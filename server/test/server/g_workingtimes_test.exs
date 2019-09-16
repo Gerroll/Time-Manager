@@ -4,63 +4,63 @@ defmodule Server.GWorkingtimesTest do
   alias Server.GWorkingtimes
 
   describe "workingtimes" do
-    alias Server.GWorkingtimes.Workingtimes
+    alias Server.GWorkingtimes.Workingtime
 
     @valid_attrs %{end: ~N[2010-04-17 14:00:00], start: ~N[2010-04-17 14:00:00]}
     @update_attrs %{end: ~N[2011-05-18 15:01:01], start: ~N[2011-05-18 15:01:01]}
     @invalid_attrs %{end: nil, start: nil}
 
-    def workingtimes_fixture(attrs \\ %{}) do
-      {:ok, workingtimes} =
+    def workingtime_fixture(attrs \\ %{}) do
+      {:ok, workingtime} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> GWorkingtimes.create_workingtimes()
+        |> GWorkingtimes.create_workingtime()
 
-      workingtimes
+      workingtime
     end
 
     test "list_workingtimes/0 returns all workingtimes" do
-      workingtimes = workingtimes_fixture()
-      assert GWorkingtimes.list_workingtimes() == [workingtimes]
+      workingtime = workingtime_fixture()
+      assert GWorkingtimes.list_workingtimes() == [workingtime]
     end
 
-    test "get_workingtimes!/1 returns the workingtimes with given id" do
-      workingtimes = workingtimes_fixture()
-      assert GWorkingtimes.get_workingtimes!(workingtimes.id) == workingtimes
+    test "get_workingtime!/1 returns the workingtime with given id" do
+      workingtime = workingtime_fixture()
+      assert GWorkingtimes.get_workingtime!(workingtime.id) == workingtime
     end
 
-    test "create_workingtimes/1 with valid data creates a workingtimes" do
-      assert {:ok, %Workingtimes{} = workingtimes} = GWorkingtimes.create_workingtimes(@valid_attrs)
-      assert workingtimes.end == ~N[2010-04-17 14:00:00]
-      assert workingtimes.start == ~N[2010-04-17 14:00:00]
+    test "create_workingtime/1 with valid data creates a workingtime" do
+      assert {:ok, %Workingtime{} = workingtime} = GWorkingtimes.create_workingtime(@valid_attrs)
+      assert workingtime.end == ~N[2010-04-17 14:00:00]
+      assert workingtime.start == ~N[2010-04-17 14:00:00]
     end
 
-    test "create_workingtimes/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = GWorkingtimes.create_workingtimes(@invalid_attrs)
+    test "create_workingtime/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = GWorkingtimes.create_workingtime(@invalid_attrs)
     end
 
-    test "update_workingtimes/2 with valid data updates the workingtimes" do
-      workingtimes = workingtimes_fixture()
-      assert {:ok, %Workingtimes{} = workingtimes} = GWorkingtimes.update_workingtimes(workingtimes, @update_attrs)
-      assert workingtimes.end == ~N[2011-05-18 15:01:01]
-      assert workingtimes.start == ~N[2011-05-18 15:01:01]
+    test "update_workingtime/2 with valid data updates the workingtime" do
+      workingtime = workingtime_fixture()
+      assert {:ok, %Workingtime{} = workingtime} = GWorkingtimes.update_workingtime(workingtime, @update_attrs)
+      assert workingtime.end == ~N[2011-05-18 15:01:01]
+      assert workingtime.start == ~N[2011-05-18 15:01:01]
     end
 
-    test "update_workingtimes/2 with invalid data returns error changeset" do
-      workingtimes = workingtimes_fixture()
-      assert {:error, %Ecto.Changeset{}} = GWorkingtimes.update_workingtimes(workingtimes, @invalid_attrs)
-      assert workingtimes == GWorkingtimes.get_workingtimes!(workingtimes.id)
+    test "update_workingtime/2 with invalid data returns error changeset" do
+      workingtime = workingtime_fixture()
+      assert {:error, %Ecto.Changeset{}} = GWorkingtimes.update_workingtime(workingtime, @invalid_attrs)
+      assert workingtime == GWorkingtimes.get_workingtime!(workingtime.id)
     end
 
-    test "delete_workingtimes/1 deletes the workingtimes" do
-      workingtimes = workingtimes_fixture()
-      assert {:ok, %Workingtimes{}} = GWorkingtimes.delete_workingtimes(workingtimes)
-      assert_raise Ecto.NoResultsError, fn -> GWorkingtimes.get_workingtimes!(workingtimes.id) end
+    test "delete_workingtime/1 deletes the workingtime" do
+      workingtime = workingtime_fixture()
+      assert {:ok, %Workingtime{}} = GWorkingtimes.delete_workingtime(workingtime)
+      assert_raise Ecto.NoResultsError, fn -> GWorkingtimes.get_workingtime!(workingtime.id) end
     end
 
-    test "change_workingtimes/1 returns a workingtimes changeset" do
-      workingtimes = workingtimes_fixture()
-      assert %Ecto.Changeset{} = GWorkingtimes.change_workingtimes(workingtimes)
+    test "change_workingtime/1 returns a workingtime changeset" do
+      workingtime = workingtime_fixture()
+      assert %Ecto.Changeset{} = GWorkingtimes.change_workingtime(workingtime)
     end
   end
 end
