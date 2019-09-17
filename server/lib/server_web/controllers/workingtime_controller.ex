@@ -41,19 +41,43 @@ defmodule ServerWeb.WorkingtimeController do
   # end
 
   def clockIn(conn, %{"userId" => userId}) do
-    # IO.inspect DateTime.now("Europe/France")
-    # DateTime.now("Etc/UTC")
-    IO.inspect NaiveDateTime.utc_now
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+    alreadyClockIn = Enum.any?(wTimes, fn(w) -> w.start == w.end end)
+    if alreadyClockIn do
+      conn
+      |> put_status(:bad_request)
+      |> json("KO : Already clock in, need to clock out")
+    else
+      dt = NaiveDateTime.add(NaiveDateTime.utc_now(), 7200, :second)
+      workingtime_params = %{user_id: String.to_integer(userId), start: dt, end: dt}
+      with {:ok, %Workingtime{} = workingtime} <- GWorkingtimes.create_workingtime(workingtime_params) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", workingtime: workingtime)
+      end
+    end
+  end
 
-    conn
-    |> put_status(:bad_request)
-    |> json(NaiveDateTime.utc_now)
+  def clockOut(conn, %{"userId" => userId}) do
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+    needToClockOut = Enum.any?(wTimes, fn(w) -> w.start == w.end end)
 
+    if needToClockOut do
+      w_clock = Enum.find(wTimes, fn w -> w.start == w.end end)
+      workingtime = GWorkingtimes.get_workingtime!(w_clock.id)
+      dt = NaiveDateTime.add(NaiveDateTime.utc_now(), 7200, :second)
+      with {:ok, %Workingtime{} = workingtime} <- GWorkingtimes.update_workingtime(workingtime, %{end: dt}) do
+        render(conn, "show.json", workingtime: workingtime)
+      end
+    else
+      conn
+      |> put_status(:bad_request)
+      |> json("KO : Need to clock out first")
+    end
+  end
 
-    # with {:ok, %Workingtime{} = workingtime} <- GWorkingtimes.create_workingtime(workingtime_params) do
-    #   conn
-    #   |> put_status(:created)
-    #   |> render("show.json", workingtime: workingtime)
-    # end
+  def getWorkingTimeForUser(conn, %{"userId" => userId}) do
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+    render(conn, "index.json", workingtimes: wTimes)
   end
 end

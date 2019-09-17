@@ -14,8 +14,10 @@ defmodule ServerWeb.Router do
       get "/info", UserController, :getInfoUser
       put "/update", UserController, :updateInfoUser
       delete "/delete", UserController, :deleteUser
-      # post "/clockIn", WorkingtimeController, :clockIn
-      # put "/clockOut", WorkingtimeController, :clockOut
+      post "/clockIn", WorkingtimeController, :clockIn
+      put "/clockOut", WorkingtimeController, :clockOut
+      
+      get "/getWorkingTimeForUser", WorkingtimeController, :getWorkingTimeForUser
     end
 
     scope "/manager" do

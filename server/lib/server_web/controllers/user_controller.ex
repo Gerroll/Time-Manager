@@ -3,6 +3,8 @@ defmodule ServerWeb.UserController do
 
   alias Server.GUsers
   alias Server.GUsers.User
+  alias Server.GWorkingtimes
+  alias Server.GWorkingtimes.Workingtime
 
   action_fallback ServerWeb.FallbackController
 
@@ -24,7 +26,7 @@ defmodule ServerWeb.UserController do
     else
       conn
       |> put_status(:bad_request)
-      |> json("KO: email already link to an other account")
+      |> json("KO : email already link to an other account")
     end
   end
 
@@ -68,7 +70,7 @@ defmodule ServerWeb.UserController do
     if exist do
       conn
       |> put_status(:bad_request)
-      |> json("KO: email already link to an other account")
+      |> json("KO : email already link to an other account")
     else
       u = if user_params["username"], do: Map.put(%{}, "username", user_params["username"]), else: %{}
       u = if user_params["password"], do: Map.put(u, "password", user_params["password"]), else: u
@@ -81,8 +83,21 @@ defmodule ServerWeb.UserController do
   end
 
   def deleteUser(conn, %{"userId" => userId}) do
-    user = GUsers.get_user!(userId)
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
 
+    Enum.each(wTimes, fn w -> 
+      with {:ok, %Workingtime{}} <- GWorkingtimes.delete_workingtime(w) do
+        # send_resp(conn, :no_content, "")
+      end
+    end)
+
+    # workingtime = GWorkingtimes.get_workingtime!(id)
+    # with {:ok, %Workingtime{}} <- GWorkingtimes.delete_workingtime(workingtime) do
+    #   send_resp(conn, :no_content, "")
+    # end
+
+
+    user = GUsers.get_user!(userId)
     with {:ok, %User{}} <- GUsers.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
