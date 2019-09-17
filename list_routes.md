@@ -1,11 +1,13 @@
+routes define in server/lib/server_web/router.ex
+
 all:
 - create user acount
-
+# TODO - login ?
 
 users:
-# TODO - get user info from userID
-# TODO - update user account from userID
-# TODO - delete user account
+- get user info from userID
+- update user account from userID
+- delete user account
 # TODO - create workingTime from userID and update workingTime start from userID
 # TODO - update workingTime end from userID
 # TODO - get all workingTime from userID (dashboard)

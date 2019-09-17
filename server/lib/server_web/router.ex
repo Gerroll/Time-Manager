@@ -10,7 +10,12 @@ defmodule ServerWeb.Router do
 
     post "/createUser", UserController, :createUser    
 
-    scope "/user" do
+    scope "/user/:userId" do
+      get "/info", UserController, :getInfoUser
+      put "/update", UserController, :updateInfoUser
+      delete "/delete", UserController, :deleteUser
+      # post "/clockIn", WorkingtimeController, :clockIn
+      # put "/clockOut", WorkingtimeController, :clockOut
     end
 
     scope "/manager" do
