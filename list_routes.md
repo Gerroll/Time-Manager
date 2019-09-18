@@ -33,12 +33,11 @@ general managers:
 # TODO - delete user from userID
 
 
-
 mix phx.new server --no-html --no-webpack
 
 mix phx.gen.json GTeams Team teams name:string
 
-mix phx.gen.json GUsers User users username:string email:string password:string rank:string
+mix phx.gen.json GUsers User users username:string email:string password:string rank:string token:string
 
 mix phx.gen.json GWorkingtimes Workingtime workingtimes start:datetime end:datetime user_id:references:users
 

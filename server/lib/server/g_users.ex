@@ -101,4 +101,12 @@ defmodule Server.GUsers do
   def change_user(%User{} = user) do
     User.changeset(user, %{})
   end
+
+  def getUserWhereEmail(email) do
+    query = (from u in User,
+      where: u.email == ^(email),
+      select: %User{id: u.id, email: u.email, username: u.username, password: u.password, rank: u.rank})
+    Repo.all(query)
+  end
+
 end

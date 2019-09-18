@@ -15,6 +15,8 @@ defmodule ServerWeb.UserView do
       username: user.username,
       email: user.email,
       password: user.password,
-      rank: user.rank}
+      rank: user.rank,
+      token: user.token,
+      expire_token: user.expire_token}
   end
 end

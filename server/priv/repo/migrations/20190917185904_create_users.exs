@@ -7,6 +7,8 @@ defmodule Server.Repo.Migrations.CreateUsers do
       add :email, :string, null: false
       add :password, :string, null: false
       add :rank, :string, null: false
+      add :token, :string
+      add :expire_token, :naive_datetime
 
       timestamps()
     end

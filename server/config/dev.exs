@@ -54,3 +54,5 @@ config :server, Server.Repo,
   database: "server_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :joken, default_signer: "secret"
