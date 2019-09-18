@@ -101,4 +101,11 @@ defmodule Server.GWorkingtimes do
   def change_workingtime(%Workingtime{} = workingtime) do
     Workingtime.changeset(workingtime, %{})
   end
+
+  def getWorkingtimesByUserId(userID) do
+    query = (from u in Workingtime,
+      where: u.user_id == ^(userID),
+      select: %Workingtime{id: u.id, start: u.start, end: u.end, user_id: u.user_id})
+    Repo.all(query)
+  end
 end

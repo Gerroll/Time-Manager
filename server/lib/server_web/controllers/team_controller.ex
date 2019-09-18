@@ -23,7 +23,7 @@ defmodule ServerWeb.TeamController do
     else
       conn
       |> put_status(:bad_request)
-      |> json("KO")
+      |> json("KO : team name already taken")
     end
   end
 

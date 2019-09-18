@@ -7,7 +7,6 @@ defmodule Server.GUsers.User do
     field :password, :string
     field :rank, :string
     field :username, :string
-    field :team_id, :id
 
     timestamps()
   end
