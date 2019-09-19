@@ -1,8 +1,8 @@
-routes define in server/lib/server_web/router.ex
+Routes define in server/lib/server_web/router.ex
 
 all:
 - create user acount
-# TODO - login ?
+- login user(sign_in)
 
 users:
 - get user info from userID
@@ -27,7 +27,7 @@ managers, general managers:
 
 
 general managers:
-# TODO - get user list
+- get user list
 # TODO - update user rank from userID
 # TODO - get dashboard from userID
 # TODO - delete user from userID
@@ -42,26 +42,3 @@ mix phx.gen.json GUsers User users username:string email:string password:string 
 mix phx.gen.json GWorkingtimes Workingtime workingtimes start:datetime end:datetime user_id:references:users
 
 mix phx.gen.json GLinkTeams LinkTeam linkteams team_id:references:teams user_id:references:users manager:boolean
-## OLD CMD :
-##      mix phx.gen.json GRanks Rank ranks name:string
-##      mix phx.gen.json GUsers User users username:string email:string password:string team_id:references:teams rank_id:references:ranks
-
-on_delete: :delete_all
-
-
-
-  def create(conn, %{"team" => team_params}) do
-    teams = GTeams.list_teams()
-    exist = Enum.any?(teams, fn(t) -> t.name == team_params["name"] end)
-    if !exist do
-      with {:ok, %Team{} = team} <- GTeams.create_team(team_params) do
-        conn
-        |> put_status(:created)
-        |> render("show.json", team: team)
-      end
-    else
-      conn
-      |> put_status(:bad_request)
-      |> json("KO : team name already taken")
-    end
-  end

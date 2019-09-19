@@ -8,11 +8,6 @@ defmodule ServerWeb.UserController do
 
   action_fallback ServerWeb.FallbackController
 
-  # def index(conn, _params) do
-  #   users = GUsers.list_users()
-  #   render(conn, "index.json", users: users)
-  # end
-
   def createUser(conn, %{"user" => user_params}) do
     users = GUsers.list_users()
     exist = Enum.any?(users, fn(u) -> u.email == user_params["email"] end)
@@ -31,38 +26,10 @@ defmodule ServerWeb.UserController do
     end
   end
 
-
-  # def show(conn, %{"id" => id}) do
-  #   user = GUsers.get_user!(id)
-  #   render(conn, "show.json", user: user)
-  # end
-
-  # def update(conn, %{"id" => id, "user" => user_params}) do
-  #   user = GUsers.get_user!(id)
-
-  #   with {:ok, %User{} = user} <- GUsers.update_user(user, user_params) do
-  #     render(conn, "show.json", user: user)
-  #   end
-  # end
-
-  # def delete(conn, %{"id" => id}) do
-  #   user = GUsers.get_user!(id)
-
-  #   with {:ok, %User{}} <- GUsers.delete_user(user) do
-  #     send_resp(conn, :no_content, "")
-  #   end
-  # end
-
   def getUserList(conn, %{}) do
     users = GUsers.list_users()
     render(conn, "index.json", users: users)
   end
-  # def getUserList(conn, %{"token" => token}) do
-  #   IO.inspect Server.Token.verify_and_validate(token)
-
-  #   users = GUsers.list_users()
-  #   render(conn, "index.json", users: users)
-  # end
 
   def getInfoUser(conn, %{"userId" => userId}) do
     user = GUsers.get_user!(userId)
@@ -92,21 +59,11 @@ defmodule ServerWeb.UserController do
   def deleteUser(conn, %{"userId" => userId}) do
     wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
 
-    Enum.each(wTimes, fn w -> 
-      with {:ok, %Workingtime{}} <- GWorkingtimes.delete_workingtime(w) do
-        # send_resp(conn, :no_content, "")
-      end
-    end)
-
-    # workingtime = GWorkingtimes.get_workingtime!(id)
-    # with {:ok, %Workingtime{}} <- GWorkingtimes.delete_workingtime(workingtime) do
-    #   send_resp(conn, :no_content, "")
-    # end
-
+    Enum.each(wTimes, fn w -> GWorkingtimes.delete_workingtime(w) end)
 
     user = GUsers.get_user!(userId)
     with {:ok, %User{}} <- GUsers.delete_user(user) do
-      send_resp(conn, :no_content, "")
+      send_resp(conn, :ok, "ok")
     end
   end
 
@@ -117,17 +74,10 @@ defmodule ServerWeb.UserController do
     if users do
       u = Enum.at(users, 0)
       if Bcrypt.verify_pass(password, u.password) do
-        token = Server.Token.generate_and_sign()
-
-        dt = NaiveDateTime.add(NaiveDateTime.utc_now(), 2592000, :second)
-        sendInfo = %{"token" => Kernel.elem(token,1), "user_id" => u.id, "rank" => u.rank, "expire_token" => dt}
-
-        upUser = %{"token" => Kernel.elem(token,1), "expire_token" => dt}
-        with {:ok, %User{} = user} <- GUsers.update_user(u, upUser) do
-          conn
-          |> put_status(:ok)
-          |> json(sendInfo)
-        end
+        token = Server.Token.generate_and_sign!(%{"user_id" => u.id, "rank" => u.rank})
+        conn
+        |> put_status(:ok)
+        |> json(%{"token" => token, "user_id" => u.id, "rank" => u.rank})
       else
         conn
         |> put_status(:bad_request)
@@ -139,21 +89,4 @@ defmodule ServerWeb.UserController do
       |> json("KO: no account for this email")
     end
   end
-
-  def sign_out(conn, %{"userId" => userId}) do
-    user = GUsers.get_user!(userId)
-    if user do
-      upUser = %{"token" => nil, "expire_token" => nil}
-      with {:ok, %User{} = user} <- GUsers.update_user(user, upUser) do
-        conn
-        |> put_status(:ok)
-        send_resp(conn, :no_content, "")
-      end
-    else
-      conn
-      |> put_status(:bad_request)
-      |> json("KO : Bad userId")
-    end
-  end
-
 end
