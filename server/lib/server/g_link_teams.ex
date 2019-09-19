@@ -101,4 +101,27 @@ defmodule Server.GLinkTeams do
   def change_link_team(%LinkTeam{} = link_team) do
     LinkTeam.changeset(link_team, %{})
   end
+
+
+  # def getUserInTeam(team_id) do
+  #   query = (from lt in Workingtime,
+  #     where: lt.team_id == ^(team_id),
+  #     select: %Workingtime{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+  #   Repo.all(query)
+  # end
+
+  def getLinkTeamByTeamId(team_id) do
+    query = (from lt in LinkTeam,
+      where: lt.team_id == ^(team_id),
+      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+    Repo.all(query)
+  end
+
+  def getLinkTeamByUserId(user_id) do
+    query = (from lt in LinkTeam,
+      where: lt.user_id == ^(user_id),
+      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+    Repo.all(query)
+  end
+
 end

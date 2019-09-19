@@ -8,19 +8,19 @@ users:
 - get user info from userID
 - update user account from userID
 - delete user account
-- create workingTime from userID and update workingTime start from userID
+- create workingTime from userID and update work# TODO start from userID
 - update workingTime end from userID
 - get all workingTime from userID (dashboard)
 
 
 managers, general managers:
 - create team
-- get user list
+- delete team from teamID
+- get user list in team choose
+- get user list not in team choose
 # TODO - update user team from userID
-# TODO - delete team from teamID
-
 # TODO - get team list from userID (managerID)
-# TODO - get user list from teamID
+
 # TODO - get workingTime averge team daily/weekly over given periode
 # TODO - get workingTime user daily/weekly over given periode
 # TODO - get dashboard of userID

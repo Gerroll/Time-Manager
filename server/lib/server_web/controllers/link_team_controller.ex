@@ -3,6 +3,7 @@ defmodule ServerWeb.LinkTeamController do
 
   alias Server.GLinkTeams
   alias Server.GLinkTeams.LinkTeam
+  alias Server.GUsers
 
   action_fallback ServerWeb.FallbackController
 
@@ -19,24 +20,25 @@ defmodule ServerWeb.LinkTeamController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    link_team = GLinkTeams.get_link_team!(id)
-    render(conn, "show.json", link_team: link_team)
-  end
+  # def show(conn, %{"id" => id}) do
+  #   link_team = GLinkTeams.get_link_team!(id)
+  #   render(conn, "show.json", link_team: link_team)
+  # end
 
-  def update(conn, %{"id" => id, "link_team" => link_team_params}) do
-    link_team = GLinkTeams.get_link_team!(id)
+  # def update(conn, %{"id" => id, "link_team" => link_team_params}) do
+  #   link_team = GLinkTeams.get_link_team!(id)
 
-    with {:ok, %LinkTeam{} = link_team} <- GLinkTeams.update_link_team(link_team, link_team_params) do
-      render(conn, "show.json", link_team: link_team)
-    end
-  end
+  #   with {:ok, %LinkTeam{} = link_team} <- GLinkTeams.update_link_team(link_team, link_team_params) do
+  #     render(conn, "show.json", link_team: link_team)
+  #   end
+  # end
 
-  def delete(conn, %{"id" => id}) do
-    link_team = GLinkTeams.get_link_team!(id)
+  # def delete(conn, %{"id" => id}) do
+  #   link_team = GLinkTeams.get_link_team!(id)
 
-    with {:ok, %LinkTeam{}} <- GLinkTeams.delete_link_team(link_team) do
-      send_resp(conn, :no_content, "")
-    end
-  end
+  #   with {:ok, %LinkTeam{}} <- GLinkTeams.delete_link_team(link_team) do
+  #     send_resp(conn, :no_content, "")
+  #   end
+  # end
+
 end

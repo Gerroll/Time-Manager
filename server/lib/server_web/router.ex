@@ -16,6 +16,11 @@ defmodule ServerWeb.Router do
     plug Server.GeneralTokenPlug
   end
 
+  ### TMP ###
+  get "/listTeam", ServerWeb.TeamController, :index
+  get "/listLink", ServerWeb.LinkTeamController, :index
+  ### TMP ###
+
   scope "/api", ServerWeb do
     pipe_through :api
 
@@ -38,7 +43,12 @@ defmodule ServerWeb.Router do
       pipe_through :managerToken
 
       get "/user_list", UserController, :getUserList
-      post "/team", TeamController, :create
+      get "/user_list_in_team", UserController, :getUserListInTeam
+      get "/user_list_not_in_team", UserController, :getUserListNotInTeam
+      post "/createTeam", TeamController, :create
+      put "/updateTeam", TeamController, :update
+      delete "/deleteTeam", TeamController, :delete
+      # post "/team", TeamController, :create
     end
 
     scope "/general" do

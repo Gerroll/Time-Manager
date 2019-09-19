@@ -5,6 +5,8 @@ defmodule ServerWeb.UserController do
   alias Server.GUsers.User
   alias Server.GWorkingtimes
   alias Server.GWorkingtimes.Workingtime
+  alias Server.GLinkTeams
+  alias Server.GTeams
 
   action_fallback ServerWeb.FallbackController
 
@@ -58,8 +60,19 @@ defmodule ServerWeb.UserController do
 
   def deleteUser(conn, %{"userId" => userId}) do
     wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
-
     Enum.each(wTimes, fn w -> GWorkingtimes.delete_workingtime(w) end)
+
+    links = GLinkTeams.getLinkTeamByUserId(userId)
+    Enum.each(links, fn lt ->
+      if lt.manager do
+        link = GLinkTeams.getLinkTeamByTeamId(lt.team_id)
+        Enum.each(link, fn lt -> GLinkTeams.delete_link_team(lt) end)
+        teamToDel = GTeams.get_team!(lt.team_id)
+        GTeams.delete_team(teamToDel)
+      else
+        GLinkTeams.delete_link_team(lt)
+      end
+    end)
 
     user = GUsers.get_user!(userId)
     with {:ok, %User{}} <- GUsers.delete_user(user) do
@@ -67,6 +80,19 @@ defmodule ServerWeb.UserController do
     end
   end
 
+  def getUserListInTeam(conn, %{"team_id" => team_id}) do
+    linkTeam = GLinkTeams.getLinkTeamByTeamId(team_id)
+    list_users_id = Enum.map(linkTeam, fn(lt) -> lt.user_id end)
+    users = GUsers.getUserWhereListUserId(list_users_id)
+    render(conn, "index.json", users: users)
+  end
+
+  def getUserListNotInTeam(conn, %{"team_id" => team_id}) do
+    linkTeam = GLinkTeams.getLinkTeamByTeamId(team_id)
+    list_users_id = Enum.map(linkTeam, fn(lt) -> lt.user_id end)
+    users = GUsers.getUserWhereListNotUserId(list_users_id)
+    render(conn, "index.json", users: users)
+  end
 
   ### AUTH PART ###
   def sign_in(conn, %{"email" => email, "password" => password}) do

@@ -4,8 +4,8 @@ defmodule Server.GLinkTeams.LinkTeam do
 
   schema "linkteams" do
     field :manager, :boolean, default: false
-    field :team_id, :id
-    field :user_id, :id
+    field :team_id, :integer
+    field :user_id, :integer
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Server.GLinkTeams.LinkTeam do
   @doc false
   def changeset(link_team, attrs) do
     link_team
-    |> cast(attrs, [:manager])
-    |> validate_required([:manager])
+    |> cast(attrs, [:team_id, :user_id, :manager])
+    |> validate_required([:team_id, :user_id, :manager])
   end
 end

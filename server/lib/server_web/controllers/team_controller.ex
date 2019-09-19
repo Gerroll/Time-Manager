@@ -3,6 +3,7 @@ defmodule ServerWeb.TeamController do
 
   alias Server.GTeams
   alias Server.GTeams.Team
+  alias Server.GLinkTeams
 
   action_fallback ServerWeb.FallbackController
 
@@ -12,10 +13,13 @@ defmodule ServerWeb.TeamController do
   end
 
   def create(conn, %{"team" => team_params}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    IO.inspect user_id
     teams = GTeams.list_teams()
-    exist = Enum.any?(teams, fn(t) -> t.name == team_params["name"] end)
+    exist = Enum.any?(teams, fn(t) -> t.name === team_params["name"] end)
     if !exist do
       with {:ok, %Team{} = team} <- GTeams.create_team(team_params) do
+        GLinkTeams.create_link_team(%{"team_id" => team.id, "user_id" => user_id, "manager" => true})
         conn
         |> put_status(:created)
         |> render("show.json", team: team)
@@ -27,22 +31,18 @@ defmodule ServerWeb.TeamController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    team = GTeams.get_team!(id)
-    render(conn, "show.json", team: team)
-  end
-
-  def update(conn, %{"id" => id, "team" => team_params}) do
-    team = GTeams.get_team!(id)
+  def update(conn, %{"team_id" => team_id, "team" => team_params}) do
+    team = GTeams.get_team!(team_id)
 
     with {:ok, %Team{} = team} <- GTeams.update_team(team, team_params) do
       render(conn, "show.json", team: team)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    team = GTeams.get_team!(id)
-
+  def delete(conn, %{"team_id" => team_id}) do
+    team = GTeams.get_team!(team_id)
+    link = GLinkTeams.getLinkTeamByTeamId(team_id)
+    Enum.each(link, fn lt -> GLinkTeams.delete_link_team(lt) end)
     with {:ok, %Team{}} <- GTeams.delete_team(team) do
       send_resp(conn, :no_content, "")
     end

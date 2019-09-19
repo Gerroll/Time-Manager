@@ -12,6 +12,8 @@ defmodule ServerWeb.LinkTeamView do
 
   def render("link_team.json", %{link_team: link_team}) do
     %{id: link_team.id,
+      team_id: link_team.team_id,
+      user_id: link_team.user_id,
       manager: link_team.manager}
   end
 end

@@ -102,11 +102,17 @@ defmodule Server.GUsers do
     User.changeset(user, %{})
   end
 
-  def getUserWhereEmail(email) do
+  def getUserWhereListUserId(list_user_id) do
     query = (from u in User,
-      where: u.email == ^(email),
-      select: %User{id: u.id, email: u.email, username: u.username, password: u.password, rank: u.rank})
+      where: u.id in ^list_user_id,
+      select: %User{id: u.id, email: u.email, username: u.username, rank: u.rank})
     Repo.all(query)
   end
 
+  def getUserWhereListNotUserId(list_user_id) do
+    query = (from u in User,
+      where: u.id not in ^list_user_id,
+      select: %User{id: u.id, email: u.email, username: u.username, rank: u.rank})
+    Repo.all(query)
+  end
 end
