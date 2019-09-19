@@ -5,10 +5,8 @@
         <a class="navbar-brand" href="/">Time-Manager</a>
         <div class="link">
           <a class="nav-link" href="/users">Users</a>
-          <a class="nav-link" href="/chart">Chart Manager</a>
-          <a class="nav-link" href="/clock">Clock Manager</a>
-          <a class="nav-link" href="/worktime">Working Time</a>
-          <a class="nav-link" href="/worktimes">Working Times</a>
+          <a class="nav-link" href="/general-manager">General Manager</a>
+          <a class="nav-link" href="/manager">Manager</a>
         </div>
       </nav>
     </div>

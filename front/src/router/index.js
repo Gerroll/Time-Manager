@@ -2,10 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Users from '@/components/Users'
-import WorkingTime from '@/components/WorkingTime.vue'
-import WorkingTimes from '@/components/WorkingTimes.vue'
-import ClockManager from '@/components/ClockManager.vue'
-import ChartManager from '@/components/ChartManager.vue'
+import General_Manager from "../components/General_Manager";
+import Manager from "../components/Manager";
 
 Vue.use(Router)
 
@@ -14,9 +12,8 @@ export default new Router({
   routes: [
     { path: '/', name:'Home', component: Home },
     { path: '/users', name:'Users', component: Users },
-    { path: '/worktime', name: 'WorkingTime', component: WorkingTime },
-    { path: '/worktimes', name: 'WorkingTimes', component: WorkingTimes },
-    { path: '/clock', name: 'ClockManager', component: ClockManager },
-    { path: '/chart', name: 'ChartManager', component: ChartManager }
+    { path: '/general-manager', name: 'GeneralManager', component: General_Manager },
+    { path: '/manager', name: 'Manager', component: Manager },
+    { path: '/manager/route', name: 'Manager', component: Manager }
   ]
 })

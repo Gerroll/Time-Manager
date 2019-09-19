@@ -1,17 +1,17 @@
 <template>
-    <container class="time">
-        <h1>Working Time</h1>
+    <container class="clock">
+        <h1>Manager</h1>
     </container>
 </template>
 
 <script>
     export default {
-        name: "WorkingTime"
+        name: "ClockManager"
     }
 </script>
 
 <style scoped>
-    .time {
+    .clock {
         text-align: center;
     }
 </style>
