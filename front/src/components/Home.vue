@@ -5,48 +5,31 @@
     </div>
 
     <div class="form">
-      <h1 class="titre">Bienvenue sur le site de Gotham City hall</h1>
+      <h1 class="titre">Welcome to the Gotham City hall website.</h1>
 
       <form class="container">
         <div class="form-group">
-          <label for="exampleInputEmail1">Adresse Email</label>
+          <label for="exampleInputEmail1">Email Address</label>
           <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                 placeholder="Entrez votre Email">
-          <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais votre adresse mail avec qui que
-            ce soit d'autre.</small>
+                 placeholder="Enter Email">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Mot de Passe</label>
+          <label for="exampleInputPassword1">Password</label>
           <input type="password" class="form-control" id="exampleInputPassword1"
-                 placeholder="Entrez votre mot de passe">
+                 placeholder="Enter Password">
         </div>
-        <button type="submit" class="btn btn-dark">Se connecter</button>
+        <button type="submit" class="btn btn-dark">Connect</button>
       </form>
     </div>
 
     <div class="infos">
-      <p>Pour calmer la tension, la mairie décide de faire ce site web pour faire le point de la situation, et pourquoi
-        pas, pour permettre aux employés municipaux d'avoir accès à quelques jours de repos pour récupérer.
+      <p>To ease the tension, the town hall decided to make this website to review the situation, and why not, to allow municipal employees to have access to a few days of rest to recover.
         <br>
         <br>
-        Pour cela, vous devez vous connecter avec votre email professionnel et votre mot de passe.</p>
+        To do this, you must log in with your professional email and password.
+      </p>
     </div>
 
-    <div id="town">
-      <img src="../assets/town.jpeg" alt="town"/>
-    </div>
-
-    <footer>
-      <div class="link">
-        <a class="nav-link" href="/users">Users</a>
-        <a class="nav-link" href="/chart">Chart Manager</a>
-        <a class="nav-link" href="/clock">Clock Manager</a>
-        <a class="nav-link" href="/worktime">Working Time</a>
-        <a class="nav-link" href="/worktimes">Working Times</a>
-      </div>
-
-      <p>© 2019 | Tous droits réservés. The Gotham town hall</p>
-    </footer>
   </div>
 </template>
 
@@ -82,55 +65,13 @@
     font-size: 26px;
   }
 
-  #town {
-    margin-top: 5%;
-  }
-
-  .link {
-    display: flex;
-    justify-content: center;
-  }
-
-  a {
-    color: white;
-    margin: 3%;
-
-  }
-
-  a:hover {
-    color: darkgrey;
-  }
-
-  footer {
-    background-color: black;
-    color: white;
-  }
-
-  footer p {
-    margin-bottom: 0;
-  }
 
 
 
   @media screen and (max-width: 708px)
   {
-    #town img {
-      display: none;
-    }
-
     #logo img {
       width: 30%;
-    }
-  }
-
-  @media screen and (max-width: 650px)
-  {
-    footer a {
-      display: contents;
-    }
-
-    footer .link {
-      margin-bottom: 5%;
     }
   }
 </style>
