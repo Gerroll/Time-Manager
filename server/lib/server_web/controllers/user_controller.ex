@@ -82,7 +82,11 @@ defmodule ServerWeb.UserController do
 
   def getUserListInTeam(conn, %{"team_id" => team_id}) do
     linkTeam = GLinkTeams.getLinkTeamByTeamId(team_id)
-    list_users_id = Enum.map(linkTeam, fn(lt) -> lt.user_id end)
+    list_users_id = Enum.map(linkTeam, fn(lt) ->
+      if lt.manager == false do
+        lt.user_id
+      end
+    end)
     users = GUsers.getUserWhereListUserId(list_users_id)
     render(conn, "index.json", users: users)
   end

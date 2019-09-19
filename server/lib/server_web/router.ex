@@ -46,8 +46,9 @@ defmodule ServerWeb.Router do
       get "/user_list_in_team", UserController, :getUserListInTeam
       get "/user_list_not_in_team", UserController, :getUserListNotInTeam
       post "/createTeam", TeamController, :create
-      put "/updateTeam", TeamController, :update
+      put "/updateNameTeam", TeamController, :update
       delete "/deleteTeam", TeamController, :delete
+      delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam
       # post "/team", TeamController, :create
     end
 

@@ -33,12 +33,18 @@ defmodule ServerWeb.LinkTeamController do
   #   end
   # end
 
-  # def delete(conn, %{"id" => id}) do
-  #   link_team = GLinkTeams.get_link_team!(id)
-
-  #   with {:ok, %LinkTeam{}} <- GLinkTeams.delete_link_team(link_team) do
-  #     send_resp(conn, :no_content, "")
-  #   end
-  # end
-
+  def removeUserFromTeam(conn, %{"user_id" => user_id, "team_id" => team_id}) do
+    link_team = GLinkTeams.getLinkTeamByUserIdAndTeamId(user_id, team_id)
+    if link_team do
+      GLinkTeams.delete_link_team(Enum.at(link_team, 0))
+      conn
+      |> put_status(:ok)
+      |> json("ok")
+    else
+      conn
+      |> put_status(:bad_request)
+      |> json("KO : not found")
+    end
+  end
+  
 end

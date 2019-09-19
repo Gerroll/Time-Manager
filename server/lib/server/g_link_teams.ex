@@ -124,4 +124,10 @@ defmodule Server.GLinkTeams do
     Repo.all(query)
   end
 
+  def getLinkTeamByUserIdAndTeamId(user_id, team_id) do
+    query = (from lt in LinkTeam,
+      where: lt.user_id == ^(user_id) and lt.team_id == ^(team_id),
+      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+    Repo.all(query)
+  end
 end
