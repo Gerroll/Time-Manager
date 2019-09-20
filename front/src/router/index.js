@@ -6,8 +6,10 @@ import General_Manager from "../components/General_Manager";
 import Manager from "../components/Manager";
 import ReportTIme from "../components/ReportTIme";
 import AccountSettings from "../components/AccountSettings";
+import TimeTeam from "../components/TimeTeam";
+import TimeUser from "../components/TimeUser";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode:'history',
@@ -18,7 +20,10 @@ export default new Router({
     { path: '/users/report-time', name: 'report-time', component: ReportTIme },
     { path: '/users/account-settings', name: 'account-settings', component: AccountSettings },
 
-    { path: '/general-manager', name: 'GeneralManager', component: General_Manager },
     { path: '/manager', name: 'Manager', component: Manager },
+    { path: '/manager/time-team', name: 'TimeTeam', component: TimeTeam },
+    { path: '/manager/time-user', name: 'TimeUser', component: TimeUser },
+
+    { path: '/general-manager', name: 'GeneralManager', component: General_Manager },
   ]
 })
