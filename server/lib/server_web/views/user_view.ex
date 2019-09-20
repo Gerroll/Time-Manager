@@ -14,7 +14,6 @@ defmodule ServerWeb.UserView do
     %{id: user.id,
       username: user.username,
       email: user.email,
-      password: user.password,
       rank: user.rank,
     }
   end

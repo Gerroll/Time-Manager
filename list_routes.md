@@ -15,10 +15,11 @@ users:
 
 managers, general managers:
 - create team
+- update team name
 - delete team from teamID
 - get user list in team choose
 - get user list not in team choose
-# TODO - update user team from userID
+# TODO - del one user from one team
 # TODO - get team list from userID (managerID)
 
 # TODO - get workingTime averge team daily/weekly over given periode

@@ -19,6 +19,7 @@ defmodule ServerWeb.Router do
   ### TMP ###
   get "/listTeam", ServerWeb.TeamController, :index
   get "/listLink", ServerWeb.LinkTeamController, :index
+  get "/user_list", ServerWeb.UserController, :getUserList
   ### TMP ###
 
   scope "/api", ServerWeb do
