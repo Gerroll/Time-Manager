@@ -4,16 +4,13 @@ import Home from '@/components/Home'
 import Users from '@/components/Users'
 import General_Manager from "../components/General_Manager";
 import Manager from "../components/Manager";
-<<<<<<< HEAD
 import CreateUser from '@/components/templateAPI/CreateUser'
 import UserHome from '@/components/templateAPI/UserHome'
 import Login from '@/components/templateAPI/Login'
-=======
 import ReportTIme from "../components/ReportTIme";
 import AccountSettings from "../components/AccountSettings";
 import TimeTeam from "../components/TimeTeam";
 import TimeUser from "../components/TimeUser";
->>>>>>> b7a53a64b7e4bb35ee7bfec0e494ecad1b216fcd
 
 Vue.use(Router);
 
@@ -28,7 +25,6 @@ const UserGuard = (to, from, next) => {
 export default new Router({
   mode:'history',
   routes: [
-<<<<<<< HEAD
     { path: '*', redirect: '/notfound' },
     { path: '/login', component: Login},
     { 
@@ -61,8 +57,6 @@ export default new Router({
     { 
       beforeEnter: UserGuard,
       path: '/manager/route', name: 'Manager', component: Manager },
-    ]
-=======
     { path: '/', name:'Home', component: Home },
 
     { path: '/users', name:'Users', component: Users },
@@ -75,5 +69,4 @@ export default new Router({
 
     { path: '/general-manager', name: 'GeneralManager', component: General_Manager },
   ]
->>>>>>> b7a53a64b7e4bb35ee7bfec0e494ecad1b216fcd
 })
