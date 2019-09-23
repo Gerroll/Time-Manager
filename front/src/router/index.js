@@ -40,36 +40,16 @@ export default new Router({
       path: '/login',
       component: Login
     },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/user',
-    //   children: [{
-    //       path: 'home',
-    //       component: UserHome
-    //     },
-    //     {
-    //       path: '',
-    //       redirect: 'home'
-    //     },
-    //   ]
-    // },
     {
       beforeEnter: UserGuard,
       path: '/user',
       component: UserHome
     },
-
     {
       beforeEnter: UserGuard,
       path: '/template',
       component: CreateUser
     },
-
-    // { path:'/employee/', children: [
-    //   { path:'clock', component: clock},
-    //   { path:'clock', component: clock},
-    //   { path:'clock', component: clock},
-    // ]},
     {
       beforeEnter: UserGuard,
       path: '/',

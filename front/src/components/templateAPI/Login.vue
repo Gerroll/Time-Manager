@@ -13,10 +13,6 @@ import axios from "axios";
 
 export default {
     name: 'Login',
-    // mounted() {
-    //     const token = localStorage.getItem('token')
-    //     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
-    // },
     methods: {
         login() {
             axios.post("http://localhost:4000/api/sign_in", {
@@ -27,14 +23,8 @@ export default {
                     localStorage.setItem('token', response.data.token)
                     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
                     this.$router.push('/user')
-                    // window.location.pathname = "/user"
                 })
                 .catch(err => { this.loginErrMsg = err.response.data })
-
-            // requete axios login
-            // recup token
-            // localStorage.setItem('token', token)
-            // axios.defaults.headers.common['x-xsrf-token'] = response.data.token
         }
     },
     data() {
