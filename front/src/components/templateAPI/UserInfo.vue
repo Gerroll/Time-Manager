@@ -8,7 +8,7 @@
 import axios from "axios";
 
 export default {
-    name: 'Login',
+    name: 'UserInfo',
     mounted() {
         axios.get("http://localhost:4000/api/user/info", {
                 crossOrigine: true,
@@ -21,7 +21,7 @@ export default {
             axios.get("http://localhost:4000/api/user/info", {
                     crossOrigine: true,
                 })
-                .then(response => (this.data = response.data.data))
+                .then(response => this.data = response.data.data)
                 .catch(err => this.dataErr = err.response.data)
         }
     },

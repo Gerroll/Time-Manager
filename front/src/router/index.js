@@ -5,7 +5,7 @@ import Users from '@/components/Users'
 import General_Manager from "../components/General_Manager";
 import Manager from "../components/Manager";
 import CreateUser from '@/components/templateAPI/CreateUser'
-import UserHome from '@/components/templateAPI/UserHome'
+import UserInfo from '@/components/templateAPI/UserInfo'
 import Login from '@/components/templateAPI/Login'
 import ReportTIme from "../components/ReportTIme";
 import AccountSettings from "../components/AccountSettings";
@@ -34,7 +34,7 @@ export default new Router({
   mode: 'history',
   routes: [{
       path: '*',
-      redirect: '/notfound'
+      redirect: '/login'
     },
     {
       path: '/login',
@@ -42,20 +42,20 @@ export default new Router({
     },
     {
       beforeEnter: UserGuard,
-      path: '/user',
-      component: UserHome
+      path: '/userInfo',
+      component: UserInfo
     },
-    {
-      beforeEnter: UserGuard,
-      path: '/template',
-      component: CreateUser
-    },
-    {
-      beforeEnter: UserGuard,
-      path: '/',
-      name: 'Home',
-      component: Home
-    },
+    // {
+    //   beforeEnter: UserGuard,
+    //   path: '/template',
+    //   component: CreateUser
+    // },
+    // {
+    //   beforeEnter: UserGuard,
+    //   path: '/',
+    //   name: 'Home',
+    //   component: Home
+    // },
     {
       beforeEnter: UserGuard,
       path: '/users',

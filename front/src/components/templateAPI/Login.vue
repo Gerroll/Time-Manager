@@ -22,7 +22,7 @@ export default {
                 .then(response => {
                     localStorage.setItem('token', response.data.token)
                     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
-                    this.$router.push('/user')
+                    this.$router.push('/userInfo')
                 })
                 .catch(err => { this.loginErrMsg = err.response.data })
         }
