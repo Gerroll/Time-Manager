@@ -4,7 +4,6 @@ defmodule ServerWeb.UserController do
   alias Server.GUsers
   alias Server.GUsers.User
   alias Server.GWorkingtimes
-  alias Server.GWorkingtimes.Workingtime
   alias Server.GLinkTeams
   alias Server.GTeams
 
@@ -33,13 +32,15 @@ defmodule ServerWeb.UserController do
     render(conn, "index.json", users: users)
   end
 
-  def getInfoUser(conn, %{"userId" => userId}) do
-    user = GUsers.get_user!(userId)
+  def getInfoUser(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    user = GUsers.get_user!(user_id)
     render(conn, "show.json", user: user)
   end
 
-  def updateInfoUser(conn, %{"userId" => userId, "user" => user_params}) do
-    user = GUsers.get_user!(userId)
+  def updateInfoUser(conn, %{"user" => user_params}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    user = GUsers.get_user!(user_id)
 
     users = GUsers.list_users()
     exist = Enum.any?(users, fn(u) -> u.email == user_params["email"] end)
@@ -58,11 +59,13 @@ defmodule ServerWeb.UserController do
     end
   end
 
-  def deleteUser(conn, %{"userId" => userId}) do
-    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+  def deleteUser(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     Enum.each(wTimes, fn w -> GWorkingtimes.delete_workingtime(w) end)
 
-    links = GLinkTeams.getLinkTeamByUserId(userId)
+    links = GLinkTeams.getLinkTeamByUserId(user_id)
     Enum.each(links, fn lt ->
       if lt.manager do
         link = GLinkTeams.getLinkTeamByTeamId(lt.team_id)
@@ -74,7 +77,7 @@ defmodule ServerWeb.UserController do
       end
     end)
 
-    user = GUsers.get_user!(userId)
+    user = GUsers.get_user!(user_id)
     with {:ok, %User{}} <- GUsers.delete_user(user) do
       send_resp(conn, :ok, "ok")
     end
@@ -101,7 +104,7 @@ defmodule ServerWeb.UserController do
   ### AUTH PART ###
   def sign_in(conn, %{"email" => email, "password" => password}) do
     users = GUsers.getUserWhereEmail(email)
-    if users do
+    if users != [] and email != nil and password != nil do
       u = Enum.at(users, 0)
       if Bcrypt.verify_pass(password, u.password) do
         token = Server.Token.generate_and_sign!(%{"user_id" => u.id, "rank" => u.rank})
@@ -118,5 +121,11 @@ defmodule ServerWeb.UserController do
       |> put_status(:bad_request)
       |> json("KO: no account for this email")
     end
+  end
+
+  def verifyToken(conn, %{}) do
+    conn
+    |> put_status(:ok)
+    |> json("ok")
   end
 end

@@ -28,7 +28,12 @@ defmodule ServerWeb.Router do
     post "/createUser", UserController, :createUser
     post "/sign_in", UserController, :sign_in
 
-    scope "/user/:userId" do
+    scope "/" do
+      pipe_through :userToken
+      get "/verifyToken", UserController, :verifyToken
+    end
+
+    scope "/user" do
       pipe_through :userToken
 
       put "/sign_out", UserController, :sign_out

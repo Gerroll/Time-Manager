@@ -24,10 +24,12 @@ export default {
                     password: this.loginPass,
                 })
                 .then(response => {
+                    localStorage.setItem('token', response.data.token)
                     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
-                    window.location.pathname = "/"
+                    this.$router.push('/user')
+                    // window.location.pathname = "/user"
                 })
-                .catch(err => { this.loginErrMsg = err })
+                .catch(err => { this.loginErrMsg = err.response.data })
 
             // requete axios login
             // recup token

@@ -12,29 +12,57 @@ import AccountSettings from "../components/AccountSettings";
 import TimeTeam from "../components/TimeTeam";
 import TimeUser from "../components/TimeUser";
 
+import axios from "axios";
+
 Vue.use(Router);
 
 const UserGuard = (to, from, next) => {
-  // localStorage.getItem('token');
-  // requete axios checktoken
-  // next('/login') // if token pas bon
-  // else
-  next();
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['x-xsrf-token'] = token
+  axios.get("http://localhost:4000/api/verifyToken", {
+      crossOrigine: true,
+    })
+    .then(response => {
+      next()
+    })
+    .catch(err => {
+      next('/login')
+    })
 }
 
 export default new Router({
-  mode:'history',
-  routes: [
-    { path: '*', redirect: '/notfound' },
-    { path: '/login', component: Login},
-    { 
+  mode: 'history',
+  routes: [{
+      path: '*',
+      redirect: '/notfound'
+    },
+    {
+      path: '/login',
+      component: Login
+    },
+    // {
+    //   beforeEnter: UserGuard,
+    //   path: '/user',
+    //   children: [{
+    //       path: 'home',
+    //       component: UserHome
+    //     },
+    //     {
+    //       path: '',
+    //       redirect: 'home'
+    //     },
+    //   ]
+    // },
+    {
       beforeEnter: UserGuard,
-      path:'/user/', children: [
-        { path:'home', component: UserHome },
-    ]},
-    { 
+      path: '/user',
+      component: UserHome
+    },
+
+    {
       beforeEnter: UserGuard,
-      path:'/template', component: CreateUser
+      path: '/template',
+      component: CreateUser
     },
 
     // { path:'/employee/', children: [
@@ -42,31 +70,55 @@ export default new Router({
     //   { path:'clock', component: clock},
     //   { path:'clock', component: clock},
     // ]},
-    { 
+    {
       beforeEnter: UserGuard,
-      path: '/', name:'Home', component: Home },
-    { 
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
       beforeEnter: UserGuard,
-      path: '/users', name:'Users', component: Users },
-    { 
+      path: '/users',
+      name: 'Users',
+      component: Users
+    },
+    {
       beforeEnter: UserGuard,
-      path: '/general-manager', name: 'GeneralManager', component: General_Manager },
-    { 
+      path: '/general-manager',
+      name: 'GeneralManager',
+      component: General_Manager
+    },
+    {
       beforeEnter: UserGuard,
-      path: '/manager', name: 'Manager', component: Manager },
-    { 
-      beforeEnter: UserGuard,
-      path: '/manager/route', name: 'Manager', component: Manager },
-    { path: '/', name:'Home', component: Home },
+      path: '/manager',
+      name: 'Manager',
+      component: Manager
+    },
+    {
+      path: '/users/report-time',
+      name: 'report-time',
+      component: ReportTIme
+    },
+    {
+      path: '/users/account-settings',
+      name: 'account-settings',
+      component: AccountSettings
+    },
 
-    { path: '/users', name:'Users', component: Users },
-    { path: '/users/report-time', name: 'report-time', component: ReportTIme },
-    { path: '/users/account-settings', name: 'account-settings', component: AccountSettings },
-
-    { path: '/manager', name: 'Manager', component: Manager },
-    { path: '/manager/time-team', name: 'TimeTeam', component: TimeTeam },
-    { path: '/manager/time-user', name: 'TimeUser', component: TimeUser },
-
-    { path: '/general-manager', name: 'GeneralManager', component: General_Manager },
+    {
+      path: '/manager',
+      name: 'Manager',
+      component: Manager
+    },
+    {
+      path: '/manager/time-team',
+      name: 'TimeTeam',
+      component: TimeTeam
+    },
+    {
+      path: '/manager/time-user',
+      name: 'TimeUser',
+      component: TimeUser
+    },
   ]
 })

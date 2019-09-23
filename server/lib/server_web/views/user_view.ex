@@ -17,4 +17,14 @@ defmodule ServerWeb.UserView do
       rank: user.rank,
     }
   end
+
+  def renderPass("user.json", %{user: user}) do
+    %{id: user.id,
+      username: user.username,
+      email: user.email,
+      rank: user.rank,
+      password: user.password
+    }
+  end
+
 end
