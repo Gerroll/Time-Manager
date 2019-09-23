@@ -40,8 +40,9 @@ defmodule ServerWeb.WorkingtimeController do
   #   end
   # end
 
-  def clockIn(conn, %{"userId" => userId}) do
-    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+  def clockIn(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     alreadyClockIn = Enum.any?(wTimes, fn(w) -> w.start == w.end end)
     if alreadyClockIn do
       conn
@@ -49,7 +50,7 @@ defmodule ServerWeb.WorkingtimeController do
       |> json("KO : Already clock in, need to clock out")
     else
       dt = NaiveDateTime.add(NaiveDateTime.utc_now(), 7200, :second)
-      workingtime_params = %{user_id: String.to_integer(userId), start: dt, end: dt}
+      workingtime_params = %{user_id: user_id, start: dt, end: dt}
       with {:ok, %Workingtime{} = workingtime} <- GWorkingtimes.create_workingtime(workingtime_params) do
         conn
         |> put_status(:created)
@@ -58,8 +59,9 @@ defmodule ServerWeb.WorkingtimeController do
     end
   end
 
-  def clockOut(conn, %{"userId" => userId}) do
-    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+  def clockOut(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     needToClockOut = Enum.any?(wTimes, fn(w) -> w.start == w.end end)
 
     if needToClockOut do
@@ -76,8 +78,9 @@ defmodule ServerWeb.WorkingtimeController do
     end
   end
 
-  def getWorkingTimeForUser(conn, %{"userId" => userId}) do
-    wTimes = GWorkingtimes.getWorkingtimesByUserId(userId)
+  def getWorkingTimeForUser(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     render(conn, "index.json", workingtimes: wTimes)
   end
 end

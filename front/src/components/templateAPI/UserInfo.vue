@@ -1,6 +1,8 @@
 <template>
-    <div id="login">
-        <button v-on:click=getInfoUser>getInfoUser</button> {{ data }} {{ dataErr }}
+    <div id="UserInfo">
+        <button v-on:click=redirectUpdate>Udpate Profile</button>
+        <button v-on:click=getInfoUser>getInfoUser</button>
+        <button v-on:click=deleteUser>Delete User Profile</button> {{ data }} {{ dataErr }}
     </div>
 </template>
 
@@ -17,18 +19,33 @@ export default {
             .catch(err => this.dataErr = err.response.data)
     },
     methods: {
+        redirectUpdate() {
+            this.$router.push('/user/update')
+        },
         getInfoUser() {
             axios.get("http://localhost:4000/api/user/info", {
                     crossOrigine: true,
                 })
                 .then(response => this.data = response.data.data)
                 .catch(err => this.dataErr = err.response.data)
+        },
+        deleteUser() {
+            axios.delete("http://localhost:4000/api/user/delete", {})
+                .then(response => {
+                    this.data = response.data.data
+                    this.dataErr = null
+                    this.$router.push('/login')
+                })
+                .catch(err => {
+                    this.data = null
+                    this.dataErr = err.response.data
+                })
         }
     },
     data() {
         return {
             data: null,
-            dataErr: null
+            dataErr: null,
         }
     }
 }

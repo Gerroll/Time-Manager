@@ -42,7 +42,7 @@ defmodule ServerWeb.Router do
       delete "/delete", UserController, :deleteUser
       post "/clockIn", WorkingtimeController, :clockIn
       put "/clockOut", WorkingtimeController, :clockOut
-      get "/getWorkingTimeForUser", WorkingtimeController, :getWorkingTimeForUser
+      get "/getWorkingTime", WorkingtimeController, :getWorkingTimeForUser
     end
 
     scope "/manager" do
@@ -52,6 +52,7 @@ defmodule ServerWeb.Router do
       get "/user_list_in_team", UserController, :getUserListInTeam
       get "/user_list_not_in_team", UserController, :getUserListNotInTeam
       post "/createTeam", TeamController, :create
+      get "/listTeam", TeamController, :getListTeamForManager
       put "/updateNameTeam", TeamController, :update
       delete "/deleteTeam", TeamController, :delete
       delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam

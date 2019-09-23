@@ -14,7 +14,6 @@ defmodule ServerWeb.TeamController do
 
   def create(conn, %{"team" => team_params}) do
     user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
-    IO.inspect user_id
     teams = GTeams.list_teams()
     exist = Enum.any?(teams, fn(t) -> t.name === team_params["name"] end)
     if !exist do
@@ -46,5 +45,14 @@ defmodule ServerWeb.TeamController do
     with {:ok, %Team{}} <- GTeams.delete_team(team) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def getListTeamForManager(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    link_team = GLinkTeams.getLinkTeamByUserIdAndIsManager(user_id)
+    teams = Enum.map(link_team, fn(lt) ->
+      GTeams.get_team!(lt.id)
+    end)
+    render(conn, "index.json", teams: teams)
   end
 end

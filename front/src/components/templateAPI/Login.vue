@@ -16,15 +16,20 @@ export default {
     methods: {
         login() {
             axios.post("http://localhost:4000/api/sign_in", {
+                    crossOrigine: true,
                     email: this.loginEmail,
                     password: this.loginPass,
                 })
                 .then(response => {
                     localStorage.setItem('token', response.data.token)
+                    localStorage.setItem('rank', response.data.rank)
                     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
-                    this.$router.push('/userInfo')
+                    this.$router.push('/user/home')
                 })
-                .catch(err => { this.loginErrMsg = err.response.data })
+                .catch(err => {
+                    console.log(err)
+                    this.loginErrMsg = err.response.data
+                })
         }
     },
     data() {

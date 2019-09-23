@@ -5,7 +5,7 @@ defmodule Server.GWorkingtimes.Workingtime do
   schema "workingtimes" do
     field :end, :naive_datetime
     field :start, :naive_datetime
-    field :user_id, :id
+    field :user_id, :integer
 
     timestamps()
   end
@@ -13,7 +13,7 @@ defmodule Server.GWorkingtimes.Workingtime do
   @doc false
   def changeset(workingtime, attrs) do
     workingtime
-    |> cast(attrs, [:start, :end])
+    |> cast(attrs, [:start, :end, :user_id])
     |> validate_required([:start, :end])
   end
 end

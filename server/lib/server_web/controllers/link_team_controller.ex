@@ -46,5 +46,4 @@ defmodule ServerWeb.LinkTeamController do
       |> json("KO : not found")
     end
   end
-  
 end

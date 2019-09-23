@@ -5,8 +5,11 @@ import Users from '@/components/Users'
 import General_Manager from "../components/General_Manager";
 import Manager from "../components/Manager";
 import CreateUser from '@/components/templateAPI/CreateUser'
-import UserInfo from '@/components/templateAPI/UserInfo'
 import Login from '@/components/templateAPI/Login'
+import UserInfo from '@/components/templateAPI/UserInfo'
+import UserHome from '@/components/templateAPI/UserHome'
+import UserUpdate from '@/components/templateAPI/UserUpdate'
+import ManagerTeam from '@/components/templateAPI/ManagerTeam'
 import ReportTIme from "../components/ReportTIme";
 import AccountSettings from "../components/AccountSettings";
 import TimeTeam from "../components/TimeTeam";
@@ -26,6 +29,49 @@ const UserGuard = (to, from, next) => {
       next()
     })
     .catch(err => {
+      console.log("log first")
+      next('/login')
+    })
+}
+
+const ManagerGuard = (to, from, next) => {
+  const token = localStorage.getItem('token');
+  const rank = localStorage.getItem('rank');
+  axios.defaults.headers.common['x-xsrf-token'] = token
+  axios.get("http://localhost:4000/api/verifyToken", {
+      crossOrigine: true,
+    })
+    .then(response => {
+      if (rank == 'manager' || rank == 'general')
+        next()
+      else if (rank == 'employee')
+        next('/user/home')
+      else
+        next('/login')
+    })
+    .catch(err => {
+      console.log("log first")
+      next('/login')
+    })
+}
+
+const GeneralGuard = (to, from, next) => {
+  const token = localStorage.getItem('token');
+  const rank = localStorage.getItem('rank');
+  axios.defaults.headers.common['x-xsrf-token'] = token
+  axios.get("http://localhost:4000/api/verifyToken", {
+      crossOrigine: true,
+    })
+    .then(response => {
+      if ( rank == 'general')
+        next()
+      else if (rank == 'manager' || rank == 'employee')
+        next('/user/home')
+      else
+        next('/login')
+    })
+    .catch(err => {
+      console.log("log first")
       next('/login')
     })
 }
@@ -42,8 +88,23 @@ export default new Router({
     },
     {
       beforeEnter: UserGuard,
-      path: '/userInfo',
+      path: '/user/profile',
       component: UserInfo
+    },
+    {
+      beforeEnter: UserGuard,
+      path: '/user/update',
+      component: UserUpdate
+    },
+    {
+      beforeEnter: UserGuard,
+      path: '/user/home',
+      component: UserHome
+    },
+    {
+      beforeEnter: ManagerGuard,
+      path: '/manager/team',
+      component: ManagerTeam
     },
     // {
     //   beforeEnter: UserGuard,
