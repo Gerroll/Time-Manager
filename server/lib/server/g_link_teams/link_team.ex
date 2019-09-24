@@ -3,7 +3,7 @@ defmodule Server.GLinkTeams.LinkTeam do
   import Ecto.Changeset
 
   schema "linkteams" do
-    field :manager, :boolean, default: false
+    field :manager, :boolean
     field :team_id, :integer
     field :user_id, :integer
 

@@ -33,6 +33,15 @@ defmodule ServerWeb.LinkTeamController do
   #   end
   # end
 
+  def addUserToTeam(conn, %{"user_id" => user_id, "team_id" => team_id}) do
+    link_team_params = %{team_id: team_id, user_id: user_id, manager: false}
+    with {:ok, %LinkTeam{} = link_team} <- GLinkTeams.create_link_team(link_team_params) do
+      conn
+      |> put_status(:created)
+      |> render("show.json", link_team: link_team)
+    end
+  end
+
   def removeUserFromTeam(conn, %{"user_id" => user_id, "team_id" => team_id}) do
     link_team = GLinkTeams.getLinkTeamByUserIdAndTeamId(user_id, team_id)
     if link_team do

@@ -51,7 +51,7 @@ defmodule ServerWeb.TeamController do
     user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
     link_team = GLinkTeams.getLinkTeamByUserIdAndIsManager(user_id)
     teams = Enum.map(link_team, fn(lt) ->
-      GTeams.get_team!(lt.id)
+      GTeams.get_team!(lt.team_id)
     end)
     render(conn, "index.json", teams: teams)
   end

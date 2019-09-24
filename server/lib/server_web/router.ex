@@ -55,6 +55,7 @@ defmodule ServerWeb.Router do
       get "/listTeam", TeamController, :getListTeamForManager
       put "/updateNameTeam", TeamController, :update
       delete "/deleteTeam", TeamController, :delete
+      post "/addUserToTeam", LinkTeamController, :addUserToTeam
       delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam
       # post "/team", TeamController, :create
     end

@@ -113,14 +113,14 @@ defmodule Server.GLinkTeams do
   def getLinkTeamByTeamId(team_id) do
     query = (from lt in LinkTeam,
       where: lt.team_id == ^(team_id),
-      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id, manager: lt.manager})
     Repo.all(query)
   end
 
   def getLinkTeamByUserId(user_id) do
     query = (from lt in LinkTeam,
       where: lt.user_id == ^(user_id),
-      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id})
+      select: %LinkTeam{id: lt.id, team_id: lt.team_id, user_id: lt.user_id, manager: lt.manager})
     Repo.all(query)
   end
 
