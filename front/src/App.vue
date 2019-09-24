@@ -3,10 +3,9 @@
     <div class="home">
       <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="/">Time-Manager</a>
-        <div class="link">
-          <a class="nav-link" href="/users">Users</a>
-          <a class="nav-link" href="/manager">Manager</a>
-          <a class="nav-link" href="/general-manager">General Manager</a>
+        <div class="w3-xlarge">
+          <i class="fa fa-home"><a class="nav-link" href="/users"></a></i>
+          <i class="fa fa-user"><a class="nav-link" href="/login"></a></i>
         </div>
       </nav>
     </div>
@@ -36,9 +35,7 @@
 </script>
 
 <style scoped>
-  .link {
-    display: flex;
-  }
+  
 
   a {
     color: white;
