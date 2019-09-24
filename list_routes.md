@@ -22,7 +22,6 @@ managers, general managers:
 - add one user to one team
 - del one user from one team
 - get team list from userID (managerID)
-
 # TODO - get workingTime averge team daily/weekly over given periode
 # TODO - get workingTime user daily/weekly over given periode
 # TODO - get dashboard of userID

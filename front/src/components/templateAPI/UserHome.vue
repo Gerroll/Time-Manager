@@ -5,8 +5,10 @@
         <button v-on:click=clockIn>clockIn</button>
         <button v-on:click=clockOut>clockOut</button>
         <button v-on:click=getWorkingTime>refreshWorkingTime</button>
+        <button v-on:click=logOut>logOut</button>
         <div>{{ data }} {{ dataErr }}</div>
         <div>{{ workingTime }}{{ workingTimeErr }}</div>
+
     </div>
 </template>
 
@@ -80,6 +82,11 @@ export default {
                     this.workingTime = null
                     this.workingTimeErr = err.response.data
                 })
+        },
+        logOut() {
+            localStorage.setItem('token', null)
+            localStorage.setItem('rank', null)
+            this.$router.push('/login')
         }
     },
     data() {

@@ -1,21 +1,29 @@
 <template>
     <div id="login">
-    <div class="form">
-      <h1 class="titre">Welcome to the Gotham City hall website.</h1>
-    <br>
-    <br>
-    <form class="container">
-        <div class="form-group">
-             <label for="exampleInputEmail1">Email Address</label>
-            <input type="email" placeholder="email" v-model="loginEmail">
+        <div class="form">
+            <h1 class="titre">Welcome to the Gotham City hall website.</h1>
+            <br>
+            <br>
+            <form class="container" @submit="login">
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">Email Address</label>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="email" v-model="loginEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputPassword1">Password</label>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="password" v-model="loginPass">
+                    </div>
+                </div>
+                <button>Login</button> {{ loginErrMsg }}
+            </form>
         </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="text" placeholder="password" v-model="loginPass">
-            </div>
-             <button v-on:click=login>Login</button> {{ loginErrMsg }}
-    </form>
-    </div>
     </div>
 </template>
 
@@ -25,8 +33,11 @@ import axios from "axios";
 export default {
     name: 'Login',
     methods: {
-        login() {
-            axios.post("http://localhost:4000/api/sign_in", {
+        login(e) {
+            e.preventDefault();
+            console.log(this.loginEmail)
+            if (this.loginEmail && this.loginPass)
+                axios.post("http://localhost:4000/api/sign_in", {
                     crossOrigine: true,
                     email: this.loginEmail,
                     password: this.loginPass,
@@ -38,7 +49,6 @@ export default {
                     this.$router.push('/user/home')
                 })
                 .catch(err => {
-                    console.log(err)
                     this.loginErrMsg = err.response.data
                 })
         }
@@ -54,36 +64,32 @@ export default {
 </script>
 
 <style scoped>
-  .login {
+.login {
     text-align: center;
     font-family: "DejaVu Math TeX Gyre";
-  }
+}
 
-  #logo {
+#logo {
     padding: 2%;
-  }
+}
 
-  .form {
-      text-align: center;
+.form {
+    text-align: center;
     background-color: black;
     color: white;
     padding: 5%;
-  }
+}
 
-  .infos {
+.infos {
     background-color: #9f9f9f;
     color: white;
     padding: 5%;
     font-size: 26px;
-  }
+}
 
-
-
-
-  @media screen and (max-width: 708px)
-  {
+@media screen and (max-width: 708px) {
     #logo img {
-      width: 30%;
+        width: 30%;
     }
-  }
+}
 </style>
