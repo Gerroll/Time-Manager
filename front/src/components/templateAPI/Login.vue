@@ -1,10 +1,21 @@
 <template>
     <div id="login">
-        LOGIN:
-        <input type="email" placeholder="email" v-model="loginEmail">
-        <input type="text" placeholder="password" v-model="loginPass">
-    
-        <button v-on:click=login>Login</button> {{ loginErrMsg }}
+    <div class="form">
+      <h1 class="titre">Welcome to the Gotham City hall website.</h1>
+    <br>
+    <br>
+    <form class="container">
+        <div class="form-group">
+             <label for="exampleInputEmail1">Email Address</label>
+            <input type="email" placeholder="email" v-model="loginEmail">
+        </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="text" placeholder="password" v-model="loginPass">
+            </div>
+             <button v-on:click=login>Login</button> {{ loginErrMsg }}
+    </form>
+    </div>
     </div>
 </template>
 
@@ -41,3 +52,38 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+  .login {
+    text-align: center;
+    font-family: "DejaVu Math TeX Gyre";
+  }
+
+  #logo {
+    padding: 2%;
+  }
+
+  .form {
+      text-align: center;
+    background-color: black;
+    color: white;
+    padding: 5%;
+  }
+
+  .infos {
+    background-color: #9f9f9f;
+    color: white;
+    padding: 5%;
+    font-size: 26px;
+  }
+
+
+
+
+  @media screen and (max-width: 708px)
+  {
+    #logo img {
+      width: 30%;
+    }
+  }
+</style>
