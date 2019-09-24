@@ -19,8 +19,9 @@ managers, general managers:
 - delete team from teamID
 - get user list in team choose
 - get user list not in team choose
-# TODO - del one user from one team
-# TODO - get team list from userID (managerID)
+- add one user to one team
+- del one user from one team
+- get team list from userID (managerID)
 
 # TODO - get workingTime averge team daily/weekly over given periode
 # TODO - get workingTime user daily/weekly over given periode
