@@ -1,14 +1,8 @@
 <template>
     <div id="ManagerTeam">
-        <div id="logo">
-          <img src="../../assets/gotham.png" alt="logo" width="15%"/>
-        </div>
-        <div id="formTeam">
-            <div class="container">
-                <h1>You can create a team here</h1>
-                <input type="text" placeholder="Name of the team" v-model="nameTeam" class="form-control" id="inputName"/>
-                <button v-on:click=createTeam id="btn_edit" type="submit" class="btn btn-outline-dark btn-lg">Create a team</button>
-            </div>
+        <div>
+            <input type="text" placeholder="nameTeam" v-model="nameTeam">
+            <button v-on:click=createTeam>createTeam</button>
         </div>
         <div>
             <div v-if="this.listTeam">
@@ -23,7 +17,7 @@
             <input type="text" placeholder="newNameTeam" v-model="newNameTeam">
             <button v-if="this.newNameTeam" v-on:click=updateTeam>Update "{{ selectTeam.name }}" to "{{ newNameTeam }}"</button> {{ updateTeamErr }}
         </div>
-
+    
         <div v-if="usersNotInTeam && selectTeam">
             <select v-model="userToAdd">
                 <option v-for="user in usersNotInTeam" :key="user.id" :value="user">{{user.email}}</option>
@@ -41,7 +35,7 @@
         <div>
             {{ selectTeam }} {{ listTeam }} {{ listTeamErr }}
         </div>
-
+    
     </div>
 </template>
 
@@ -217,34 +211,5 @@ export default {
 <style scoped>
 .selectTeam {
     width: 10%;
-}
-
-  #logo {
-    padding: 2%;
-  }
-
-  #formTeam {
-    padding: 5%;
-    background-color: #9f9f9f;
-  }
-
-  #ManagerTeam {
-    text-align: center;
-    font-family: "DejaVu Math TeX Gyre";
-  }
-
-  #inputName {
-    margin-bottom: 2%;
-    margin-top: 2%;
-  }
-
-
-
-
-@media screen and (max-width: 708px)
-{
-  #logo img {
-    width: 30%;
-  }
 }
 </style>
