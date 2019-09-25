@@ -1,13 +1,7 @@
 <template>
   <div id="app">
     <div class="home">
-      <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="/">Time-Manager</a>
-        <div class="w3-xlarge">
-          <i class="fa fa-home"><a class="nav-link" href="/users"></a></i>
-          <i class="fa fa-user"><a class="nav-link" href="/login"></a></i>
-        </div>
-      </nav>
+
     </div>
 
     <router-view/>

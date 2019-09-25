@@ -87,22 +87,22 @@ export default new Router({
             component: Login
         },
         {
-            beforeEnter: UserGuard,
+
             path: '/user/profile',
             component: UserInfo
         },
         {
-            beforeEnter: UserGuard,
+
             path: '/user/update',
             component: UserUpdate
         },
         {
-            beforeEnter: UserGuard,
+
             path: '/user/home',
             component: UserHome
         },
         {
-            beforeEnter: ManagerGuard,
+
             path: '/manager/team',
             component: ManagerTeam
         },
@@ -118,19 +118,19 @@ export default new Router({
         //   component: Home
         // },
         {
-            beforeEnter: UserGuard,
+
             path: '/users',
             name: 'Users',
             component: Users
         },
         {
-            beforeEnter: UserGuard,
+
             path: '/general-manager',
             name: 'GeneralManager',
             component: General_Manager
         },
         {
-            beforeEnter: UserGuard,
+
             path: '/manager',
             name: 'Manager',
             component: Manager
