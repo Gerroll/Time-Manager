@@ -54,14 +54,14 @@ export default {
     name: 'CreateUser',
     methods: {
         userList() { // Basic get request
-            axios.get("http://localhost:4000/user_list", {
+            axios.get(process.env.ROOT_API + "/user_list", {
                     crossOrigine: true,
                 })
                 .then(response => (this.data = response.data.data))
         },
         createUser() { // Basic post request
             if (this.password == this.password2) {
-                axios.post("http://localhost:4000/api/createUser", {
+                axios.post(process.env.ROOT_API + "/api/createUser", {
                         user: {
                             email: this.email,
                             username: this.username,
@@ -77,7 +77,7 @@ export default {
             }
         },
         // login() {
-        //     axios.post("http://localhost:4000/api/sign_in", {
+        //     axios.post(process.env.ROOT_API + "/api/sign_in", {
         //             email: this.loginEmail,
         //             password: this.loginPass,
         //         })

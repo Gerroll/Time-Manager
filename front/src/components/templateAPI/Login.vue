@@ -8,27 +8,6 @@
     <div id="description">
       <h1>Login</h1>
     </div>
-            <!-- <form class="container" @submit="login">
-                <div class="form-group">
-                    <div>
-                        <label for="exampleInputEmail1">Email Address</label>
-                    </div>
-                    <div>
-                        <input type="text" placeholder="email" v-model="loginEmail">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>
-                        <label for="exampleInputPassword1">Password</label>
-                    </div>
-                    <div>
-                        <input type="password" placeholder="password" v-model="loginPass">
-                    </div>
-                </div>
-                <button>Login</button> {{ loginErrMsg }}
-            </form> -->
-
-
     <div id="form">
       <form @submit="login">
         <label for="email">Email</label>
@@ -57,7 +36,7 @@ export default {
             e.preventDefault();
             console.log(this.loginEmail)
             if (this.loginEmail && this.loginPass)
-                axios.post("http://localhost:4000/api/sign_in", {
+                axios.post(process.env.ROOT_API + "/api/sign_in", {
                     crossOrigine: true,
                     email: this.loginEmail,
                     password: this.loginPass,

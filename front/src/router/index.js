@@ -22,7 +22,7 @@ Vue.use(Router);
 const UserGuard = (to, from, next) => {
     const token = localStorage.getItem('token');
     axios.defaults.headers.common['x-xsrf-token'] = token
-    axios.get("http://localhost:4000/api/verifyToken", {
+    axios.get(process.env.ROOT_API + "/api/verifyToken", {
             crossOrigine: true,
         })
         .then(response => {
@@ -38,7 +38,7 @@ const ManagerGuard = (to, from, next) => {
     const token = localStorage.getItem('token');
     const rank = localStorage.getItem('rank');
     axios.defaults.headers.common['x-xsrf-token'] = token
-    axios.get("http://localhost:4000/api/verifyToken", {
+    axios.get(process.env.ROOT_API + "/api/verifyToken", {
             crossOrigine: true,
         })
         .then(response => {
@@ -59,7 +59,7 @@ const GeneralGuard = (to, from, next) => {
     const token = localStorage.getItem('token');
     const rank = localStorage.getItem('rank');
     axios.defaults.headers.common['x-xsrf-token'] = token
-    axios.get("http://localhost:4000/api/verifyToken", {
+    axios.get(process.env.ROOT_API + "/api/verifyToken", {
             crossOrigine: true,
         })
         .then(response => {

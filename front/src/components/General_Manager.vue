@@ -83,7 +83,7 @@
 
         methods: {
             getAll() {
-                axios.get("http://localhost:4000/api/users", {crossOrigin: true})
+                axios.get(process.env.ROOT_API + "/api/users", {crossOrigin: true})
                     .then(resp => {
                         console.log(resp);
                         this.users = resp.data.data;
@@ -93,7 +93,7 @@
                 });
             },
             createUser() {
-                axios.post("http://localhost:4000/api/users", {users: this.new_user}, {crossOrigine: true})
+                axios.post(process.env.ROOT_API + "/api/users", {users: this.new_user}, {crossOrigine: true})
                     .then(result => {
                         this.error = "";
                         this.list_user = result.data.data;

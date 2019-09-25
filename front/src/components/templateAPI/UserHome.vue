@@ -38,7 +38,7 @@ export default {
             this.manager = true
             this.general = true
         }
-        axios.get("http://localhost:4000/api/user/getWorkingTime", {
+        axios.get(process.env.ROOT_API + "/api/user/getWorkingTime", {
                 crossOrigine: true,
             })
             .then(response => {
@@ -58,7 +58,7 @@ export default {
             this.$router.push('/manager/team')
         },
         clockIn() {
-            axios.post("http://localhost:4000/api/user/clockIn", {
+            axios.post(process.env.ROOT_API + "/api/user/clockIn", {
                     crossOrigine: true,
                 })
                 .then(response => {
@@ -71,7 +71,7 @@ export default {
                 })
         },
         clockOut() {
-            axios.put("http://localhost:4000/api/user/clockOut", {
+            axios.put(process.env.ROOT_API + "/api/user/clockOut", {
                     crossOrigine: true,
                 })
                 .then(response => {
@@ -84,7 +84,7 @@ export default {
                 })
         },
         getWorkingTime() {
-            axios.get("http://localhost:4000/api/user/getWorkingTime", {
+            axios.get(process.env.ROOT_API + "/api/user/getWorkingTime", {
                     crossOrigine: true,
                 })
                 .then(response => {

@@ -43,7 +43,7 @@
     export default {
         name: "AccountSettings",
         mounted() {
-        axios.get("http://localhost:4000/api/user/info", {
+        axios.get(process.env.ROOT_API + "/api/user/info", {
                 crossOrigine: true,
             })
             .then(response => (this.data = response.data.data))
@@ -52,7 +52,7 @@
     methods: {
         updateInfoUser() {
             if (this.password === this.password2 && this.password != null)
-                axios.put("http://localhost:4000/api/user/update", {
+                axios.put(process.env.ROOT_API + "/api/user/update", {
                     crossOrigine: true,
                     user: {
                         username: this.username,
@@ -68,7 +68,7 @@
                 .catch(err => this.dataErr = err.response.data)
         },
         getInfoUser() {
-            axios.get("http://localhost:4000/api/user/info", {
+            axios.get(process.env.ROOT_API + "/api/user/info", {
                     crossOrigine: true,
                 })
                 .then(response => this.data = response.data.data)

@@ -12,7 +12,7 @@ import axios from "axios";
 export default {
     name: 'UserInfo',
     mounted() {
-        axios.get("http://localhost:4000/api/user/info", {
+        axios.get(process.env.ROOT_API + "/api/user/info", {
                 crossOrigine: true,
             })
             .then(response => (this.data = response.data.data))
@@ -23,14 +23,14 @@ export default {
             this.$router.push('/user/update')
         },
         getInfoUser() {
-            axios.get("http://localhost:4000/api/user/info", {
+            axios.get(process.env.ROOT_API + "/api/user/info", {
                     crossOrigine: true,
                 })
                 .then(response => this.data = response.data.data)
                 .catch(err => this.dataErr = err.response.data)
         },
         deleteUser() {
-            axios.delete("http://localhost:4000/api/user/delete", {})
+            axios.delete(process.env.ROOT_API + "/api/user/delete", {})
                 .then(response => {
                     this.data = response.data.data
                     this.dataErr = null

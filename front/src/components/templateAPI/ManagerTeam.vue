@@ -45,7 +45,7 @@ import axios from "axios";
 export default {
     name: 'ManagerTeam',
     created() {
-        axios.get("http://localhost:4000/api/manager/listTeam", {
+        axios.get(process.env.ROOT_API + "/api/manager/listTeam", {
                 crossOrigine: true,
             })
             .then(response => {
@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         getListTeam() {
-            axios.get("http://localhost:4000/api/manager/listTeam", {
+            axios.get(process.env.ROOT_API + "/api/manager/listTeam", {
                     crossOrigine: true,
                 })
                 .then(response => {
@@ -77,7 +77,7 @@ export default {
         },
         createTeam() {
             if (this.nameTeam != null)
-                axios.post("http://localhost:4000/api/manager/createTeam", {
+                axios.post(process.env.ROOT_API + "/api/manager/createTeam", {
                     team: {
                         name: this.nameTeam
                     }
@@ -92,7 +92,7 @@ export default {
         },
         deleteTeam() {
             if (this.selectTeam.id != null) {
-                axios.delete("http://localhost:4000/api/manager/deleteTeam", {
+                axios.delete(process.env.ROOT_API + "/api/manager/deleteTeam", {
                         data: {
                             team_id: this.selectTeam.id
                         }
@@ -109,7 +109,7 @@ export default {
         },
         updateTeam() {
             if (this.selectTeam.id != null && this.newNameTeam != null) {
-                axios.put("http://localhost:4000/api/manager/updateNameTeam", {
+                axios.put(process.env.ROOT_API + "/api/manager/updateNameTeam", {
                         team_id: this.selectTeam.id,
                         team: {
                             name: this.newNameTeam
@@ -126,7 +126,7 @@ export default {
             }
         },
         getUserListNotInTeam() {
-            axios.get("http://localhost:4000/api/manager/user_list_not_in_team", {
+            axios.get(process.env.ROOT_API + "/api/manager/user_list_not_in_team", {
                     params: {
                         team_id: this.selectTeam.id
                     }
@@ -141,7 +141,7 @@ export default {
                 })
         },
         addUserToSelectTeam() {
-            axios.post("http://localhost:4000/api/manager/addUserToTeam", {
+            axios.post(process.env.ROOT_API + "/api/manager/addUserToTeam", {
                     team_id: this.selectTeam.id,
                     user_id: this.userToAdd.id
                 })
@@ -156,7 +156,7 @@ export default {
                 })
         },
         getUserListInTeam() {
-            axios.get("http://localhost:4000/api/manager/user_list_in_team", {
+            axios.get(process.env.ROOT_API + "/api/manager/user_list_in_team", {
                     params: {
                         team_id: this.selectTeam.id
                     }
@@ -171,7 +171,7 @@ export default {
                 })
         },
         delUserFromSelectTeam() {
-            axios.delete("http://localhost:4000/api/manager/removeUserFromTeam", {
+            axios.delete(process.env.ROOT_API + "/api/manager/removeUserFromTeam", {
                     data: {
                         team_id: this.selectTeam.id,
                         user_id: this.userToDel.id
