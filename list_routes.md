@@ -24,13 +24,13 @@ managers, general managers:
 - get team list from userID (managerID)
 # TODO - get workingTime averge team daily/weekly over given periode
 # TODO - get workingTime user daily/weekly over given periode
-# TODO - get dashboard of userID
+- get dashboard of userID
 
 
 general managers:
 - get user list
-# TODO - update user rank from userID
-# TODO - get dashboard from userID
+- update user rank from userID
+- get dashboard from userID
 # TODO - delete user from userID
 
 

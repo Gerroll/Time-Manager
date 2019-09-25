@@ -59,9 +59,7 @@ defmodule ServerWeb.UserController do
     end
   end
 
-  def deleteUser(conn, %{}) do
-    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
-
+  def deleteUser(conn, %{"user_id" => user_id}) do
     wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     Enum.each(wTimes, fn w -> GWorkingtimes.delete_workingtime(w) end)
 
@@ -99,6 +97,26 @@ defmodule ServerWeb.UserController do
     list_users_id = Enum.map(linkTeam, fn(lt) -> lt.user_id end)
     users = GUsers.getUserWhereListNotUserId(list_users_id)
     render(conn, "index.json", users: users)
+  end
+
+  def updateRankUser(conn, %{"user_id" => user_id, "rank" => rank}) do
+    user = GUsers.get_user!(user_id)
+    if rank != "employee" and rank != "manager" and rank != "general" do
+      conn
+      |> put_status(:bad_request)
+      |> json("KO: bad rank update")
+    else
+      GUsers.update_user(user, %{"rank" => rank})
+      conn
+      |> put_status(:ok)
+      |> json("ok")
+    end
+  end
+
+  def getListRank(conn, %{}) do
+    conn
+    |> put_status(:ok)
+    |> json(%{"list" => ["employee", "manager", "general"]})
   end
 
   ### AUTH PART ###

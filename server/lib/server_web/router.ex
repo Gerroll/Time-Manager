@@ -30,16 +30,15 @@ defmodule ServerWeb.Router do
 
     scope "/" do
       pipe_through :userToken
-      get "/verifyToken", UserController, :verifyToken
     end
 
     scope "/user" do
       pipe_through :userToken
 
+      get "/verifyToken", UserController, :verifyToken
       put "/sign_out", UserController, :sign_out
       get "/info", UserController, :getInfoUser
       put "/update", UserController, :updateInfoUser
-      delete "/delete", UserController, :deleteUser
       post "/clockIn", WorkingtimeController, :clockIn
       put "/clockOut", WorkingtimeController, :clockOut
       get "/getWorkingTime", WorkingtimeController, :getWorkingTimeForUser
@@ -49,7 +48,7 @@ defmodule ServerWeb.Router do
     scope "/manager" do
       pipe_through :managerToken
 
-      get "/user_list", UserController, :getUserList
+      get "/verifyToken", UserController, :verifyToken
       get "/user_list_in_team", UserController, :getUserListInTeam
       get "/user_list_not_in_team", UserController, :getUserListNotInTeam
       post "/createTeam", TeamController, :create
@@ -63,6 +62,12 @@ defmodule ServerWeb.Router do
 
     scope "/general" do
       pipe_through :generalToken
+
+      get "/verifyToken", UserController, :verifyToken
+      get "/user_list", UserController, :getUserList
+      put "/updateRankUser", UserController, :updateRankUser
+      get "/getListRank", UserController, :getListRank
+      delete "/deleteUser", UserController, :deleteUser
     end
   end
 end
