@@ -9,16 +9,38 @@
       <h1>Login</h1>
       <a href="/template" ><p>Sign Up.</p></a>
     </div>
+            <!-- <form class="container" @submit="login">
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">Email Address</label>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="email" v-model="loginEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputPassword1">Password</label>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="password" v-model="loginPass">
+                    </div>
+                </div>
+                <button>Login</button> {{ loginErrMsg }}
+            </form> -->
+
+
     <div id="form">
-      <form @submit.prevent="doLogin">
+      <form @submit="login">
         <label for="email">Email</label>
-        <input type="text" id="email" v-model="email" placeholder="user@example.com" autocomplete="off">
+        <input type="text" placeholder="email" v-model="loginEmail">
 
         <label for="password">Password</label>&nbsp;
         <i class="fas" :class="[passwordIcon]" @click="hidePassword = !hidePassword"></i>
-        <input :type="passwordType" id="password" v-model="password" placeholder="**********">
+        <input type="password" placeholder="password" v-model="loginPass">
+        <button>Login</button>
+        {{ loginErrMsg }}
 
-        <button type="submit">Log in</button>
       </form>
     </div>
   </div>
@@ -32,8 +54,11 @@ import axios from "axios";
 export default {
     name: 'Login',
     methods: {
-        login() {
-            axios.post("http://localhost:4000/api/sign_in", {
+        login(e) {
+            e.preventDefault();
+            console.log(this.loginEmail)
+            if (this.loginEmail && this.loginPass)
+                axios.post("http://localhost:4000/api/sign_in", {
                     crossOrigine: true,
                     email: this.loginEmail,
                     password: this.loginPass,
@@ -45,7 +70,6 @@ export default {
                     this.$router.push('/user/home')
                 })
                 .catch(err => {
-                    console.log(err)
                     this.loginErrMsg = err.response.data
                 })
         }
