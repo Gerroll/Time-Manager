@@ -1,6 +1,6 @@
 <template>
     <container class="clock">
-        <h1>Manager</h1>
+        <h1>Managers</h1>
     </container>
 </template>
 
