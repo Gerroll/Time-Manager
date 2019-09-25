@@ -43,6 +43,7 @@ defmodule ServerWeb.Router do
       post "/clockIn", WorkingtimeController, :clockIn
       put "/clockOut", WorkingtimeController, :clockOut
       get "/getWorkingTime", WorkingtimeController, :getWorkingTimeForUser
+      get "/getDashboard", WorkingtimeController, :getDashboard
     end
 
     scope "/manager" do
@@ -58,7 +59,6 @@ defmodule ServerWeb.Router do
       post "/addUserToTeam", LinkTeamController, :addUserToTeam
       delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam
       get "/getDashboardOfUser", WorkingtimeController, :getDashboardOfUser
-      # get dashboard of userID
     end
 
     scope "/general" do

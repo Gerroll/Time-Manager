@@ -74,7 +74,7 @@ defmodule ServerWeb.WorkingtimeController do
     else
       conn
       |> put_status(:bad_request)
-      |> json("KO : Need to clock out first")
+      |> json("KO : Need to clock in first")
     end
   end
 
@@ -84,19 +84,48 @@ defmodule ServerWeb.WorkingtimeController do
     render(conn, "index.json", workingtimes: wTimes)
   end
 
-  def getDashboard(conn, %{}) do
-    # user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
-    # wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
-    # # render(conn, "index.json", workingtimes: wTimes)
-    # workingtime = Enum.map(wTimes, fn wt ->
-    # NaiveDateTime.diff(wT.start, )
-    # end)
+  def getDashboardOfUser(conn, %{"user_id" => user_id}) do
+    wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
+    averagePerDayOf7pastDay = Enum.sum(Enum.map(wTimes, fn wt ->
+      if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -604800, :second)) == :gt and wt.end !== wt.start) do
+        NaiveDateTime.diff(wt.end, wt.start)
+      else
+        0
+      end
+    end)) / 5
+
+    averagePerWeekOf28pastDay = Enum.sum(Enum.map(wTimes, fn wt ->
+      if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -2419200, :second)) == :gt and wt.end !== wt.start) do
+        NaiveDateTime.diff(wt.end, wt.start)
+      else
+        0
+      end
+    end)) / 4
+
+    workTimesPast7Days = Enum.map(wTimes, fn wt ->
+      if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -604800, :second)) == :gt and wt.end !== wt.start) do
+        %{start: wt.start, end: wt.end}
+      end
+    end)
+  
+    workTimesPast28Days = Enum.map(wTimes, fn wt ->
+      if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -2419200, :second)) == :gt and wt.end !== wt.start) do
+        %{start: wt.start, end: wt.end}
+      end
+    end)
+
     conn
-    |> json("ok")
+    |> put_status(:ok)
+    |> json(%{
+      averagePerDayOf7pastDay: averagePerDayOf7pastDay,
+      averagePerWeekOf28pastDay: averagePerWeekOf28pastDay,
+      workTimesPast7Days: workTimesPast7Days,
+      workTimesPast28Days: workTimesPast28Days,
+    })
   end
 
-  # def getDashboardOfUser(conn, %{"user_id" => user_id}) do
-    
-  #   conn
-  # end
+  def getDashboard(conn, %{}) do
+    user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    getDashboardOfUser(conn, %{"user_id" => user_id})
+  end
 end
