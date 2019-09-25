@@ -7,8 +7,28 @@
     <div id="login">
     <div id="description">
       <h1>Login</h1>
-      <a href="/template" ><p>Sign Up.</p></a>
     </div>
+            <!-- <form class="container" @submit="login">
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputEmail1">Email Address</label>
+                    </div>
+                    <div>
+                        <input type="text" placeholder="email" v-model="loginEmail">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <label for="exampleInputPassword1">Password</label>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="password" v-model="loginPass">
+                    </div>
+                </div>
+                <button>Login</button> {{ loginErrMsg }}
+            </form> -->
+
+
     <div id="form">
       <form @submit="login">
         <label for="email">Email</label>
@@ -215,3 +235,4 @@ div#Login div#login div#form button:hover {
   }
 }
 </style>
+

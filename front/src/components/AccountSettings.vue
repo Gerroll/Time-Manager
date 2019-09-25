@@ -21,7 +21,7 @@
         <label for="password">Password</label>
         <input :type="passwordType" id="password" v-model="password" value=this.password >
 
-        <button type="submit">Ad</button>
+        <button v-on:click=updateInfoUser>updateInfoUser</button> {{ data }} {{ dataErr }}
       </form>
     </div>
     
@@ -42,13 +42,49 @@
 <script>
     export default {
         name: "AccountSettings",
-        data() {
-          return {
-            email: 'test',
-            username: 'test',
-            password: 'test'
-          }
+        mounted() {
+        axios.get("http://localhost:4000/api/user/info", {
+                crossOrigine: true,
+            })
+            .then(response => (this.data = response.data.data))
+            .catch(err => this.dataErr = err.response.data)
+    },
+    methods: {
+        updateInfoUser() {
+            if (this.password === this.password2 && this.password != null)
+                axios.put("http://localhost:4000/api/user/update", {
+                    crossOrigine: true,
+                    user: {
+                        username: this.username,
+                        email: this.email,
+                        password: this.password
+                    }
+                })
+                .then(response => {
+                    this.data = response.data.data
+                    this.dataErr = null
+                    getInfoUser()
+                })
+                .catch(err => this.dataErr = err.response.data)
+        },
+        getInfoUser() {
+            axios.get("http://localhost:4000/api/user/info", {
+                    crossOrigine: true,
+                })
+                .then(response => this.data = response.data.data)
+                .catch(err => this.dataErr = err.response.data)
         }
+    },
+    data() {
+        return {
+            data: null,
+            dataErr: null,
+            email: null,
+            username: null,
+            password: null,
+            password2: null,
+        }
+    }
     }
 </script>
 
