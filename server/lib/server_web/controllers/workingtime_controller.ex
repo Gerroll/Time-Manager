@@ -83,4 +83,20 @@ defmodule ServerWeb.WorkingtimeController do
     wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
     render(conn, "index.json", workingtimes: wTimes)
   end
+
+  def getDashboard(conn, %{}) do
+    # user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
+    # wTimes = GWorkingtimes.getWorkingtimesByUserId(user_id)
+    # # render(conn, "index.json", workingtimes: wTimes)
+    # workingtime = Enum.map(wTimes, fn wt ->
+    # NaiveDateTime.diff(wT.start, )
+    # end)
+    conn
+    |> json("ok")
+  end
+
+  # def getDashboardOfUser(conn, %{"user_id" => user_id}) do
+    
+  #   conn
+  # end
 end

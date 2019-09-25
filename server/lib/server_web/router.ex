@@ -57,7 +57,8 @@ defmodule ServerWeb.Router do
       delete "/deleteTeam", TeamController, :delete
       post "/addUserToTeam", LinkTeamController, :addUserToTeam
       delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam
-      # post "/team", TeamController, :create
+      get "/getDashboardOfUser", WorkingtimeController, :getDashboardOfUser
+      # get dashboard of userID
     end
 
     scope "/general" do
