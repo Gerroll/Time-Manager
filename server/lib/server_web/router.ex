@@ -58,6 +58,7 @@ defmodule ServerWeb.Router do
       post "/addUserToTeam", LinkTeamController, :addUserToTeam
       delete "/removeUserFromTeam", LinkTeamController, :removeUserFromTeam
       get "/getDashboardOfUser", WorkingtimeController, :getDashboardOfUser
+      get "/getTeamDashboard", WorkingtimeController, :getTeamDashboard
     end
 
     scope "/general" do

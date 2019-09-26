@@ -3,6 +3,7 @@ defmodule ServerWeb.WorkingtimeController do
 
   alias Server.GWorkingtimes
   alias Server.GWorkingtimes.Workingtime
+  alias Server.GLinkTeams
 
   action_fallback ServerWeb.FallbackController
 
@@ -127,5 +128,40 @@ defmodule ServerWeb.WorkingtimeController do
   def getDashboard(conn, %{}) do
     user_id = Kernel.elem(Server.Token.verify_and_validate(Kernel.elem(Enum.find(conn.req_headers, fn x -> Kernel.elem(x, 0) == "x-xsrf-token" end), 1)), 1)["user_id"]
     getDashboardOfUser(conn, %{"user_id" => user_id})
+  end
+
+  def getTeamDashboard(conn, %{"team_id" => team_id}) do
+    linkTeams = GLinkTeams.getLinkTeamByTeamId(team_id)
+    wtTeam = Enum.concat(Enum.map(linkTeams, fn lt ->
+      GWorkingtimes.getWorkingtimesByUserId(lt.user_id)
+    end))
+    if length(linkTeams) == 0 or length(linkTeams) == nil do
+      conn
+      |> put_status(:bad_request)
+      |> json("KO : Bad id team")
+    else
+      averagePerDayOf7pastDayTeam = (Enum.sum(Enum.map(wtTeam, fn wt ->
+        if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -604800, :second)) == :gt and wt.end !== wt.start) do
+          NaiveDateTime.diff(wt.end, wt.start)
+        else
+          0
+        end
+      end)) / 5) / length(linkTeams)
+
+      averagePerWeekOf28pastDayTeam = (Enum.sum(Enum.map(wtTeam, fn wt ->
+        if (NaiveDateTime.compare(wt.start, NaiveDateTime.add(NaiveDateTime.utc_now(), -2419200, :second)) == :gt and wt.end !== wt.start) do
+          NaiveDateTime.diff(wt.end, wt.start)
+        else
+          0
+        end
+      end)) / 4) / length(linkTeams)
+
+      conn
+      |> put_status(:ok)
+      |> json(%{
+        averagePerDayOf7pastDayTeam: averagePerDayOf7pastDayTeam,
+        averagePerWeekOf28pastDayTeam: averagePerWeekOf28pastDayTeam
+      })
+    end
   end
 end

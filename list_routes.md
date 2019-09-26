@@ -8,7 +8,7 @@ users:
 - get user info from userID
 - update user account from userID
 - delete user account
-- create workingTime from userID and update work# TODO start from userID
+- create workingTime from userID and update work
 - update workingTime end from userID
 - get all workingTime from userID (dashboard)
 
@@ -22,8 +22,8 @@ managers, general managers:
 - add one user to one team
 - del one user from one team
 - get team list from userID (managerID)
-# TODO - get workingTime averge team daily/weekly over given periode
-# TODO - get workingTime user daily/weekly over given periode
+- get workingTime averge team daily/weekly over given periode
+- get workingTime user daily/weekly over given periode
 - get dashboard of userID
 
 
@@ -31,7 +31,7 @@ general managers:
 - get user list
 - update user rank from userID
 - get dashboard from userID
-# TODO - delete user from userID
+- delete user from userID
 
 
 mix phx.new server --no-html --no-webpack
