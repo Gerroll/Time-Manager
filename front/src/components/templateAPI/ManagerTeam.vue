@@ -1,38 +1,66 @@
 <template>
     <div id="ManagerTeam">
-        <div>
-            <input type="text" placeholder="nameTeam" v-model="nameTeam">
-            <button v-on:click=createTeam>createTeam</button>
+        <div id="logo">
+            <img src="../../assets/gotham.png" alt="logo" width="15%"/>
         </div>
+
         <div>
-            <div v-if="this.listTeam">
-                <select v-model="selectTeam" @change="getUserListNotInTeam();getUserListInTeam();">
-                    <option v-for="team in listTeam" :key="team.id" :value="team">{{team.name}}</option>
-                </select>
-                <button v-if="this.selectTeam" v-on:click=deleteTeam>Delete {{ selectTeam.name }}</button>
+            <h1 style="margin-bottom: 3%">On this page, you can Create a team, but also delete or modify them.</h1>
+        </div>
+
+        <div class="createTeam">
+            <div class="container">
+                <h2 style="margin-bottom: 4%; color: white">Create a team here </h2>
+                <input type="text" placeholder="Name of the team" class="form-control" v-model="nameTeam">
+                <button id="btnTeam" class="btn btn-outline-light btn-lg" v-on:click=createTeam>Create Team</button>
+                <div v-if="alert" style="margin-top: 3%" class="alert alert-success" role="alert">
+                    You have created the "{{ nameTeam }}" team well
+                </div>
             </div>
         </div>
-        <div v-if="this.selectTeam">
-            Update Team name selected:
-            <input type="text" placeholder="newNameTeam" v-model="newNameTeam">
-            <button v-if="this.newNameTeam" v-on:click=updateTeam>Update "{{ selectTeam.name }}" to "{{ newNameTeam }}"</button> {{ updateTeamErr }}
+
+
+        <div class="colEdit">
+            <div class="row">
+                <div class="col-sm editTeam1">
+                    <div class="container">
+                        <div v-if="this.listTeam">
+                            <h2 style="margin-bottom: 5%">Select the team you want to edit</h2>
+                            <select style="margin-bottom: 3%" class="form-control form-control-lg" v-model="selectTeam" @change="getUserListNotInTeam();getUserListInTeam();">
+                                <option v-for="team in listTeam" :key="team.id" :value="team">{{team.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm editTeam2">
+                    <div v-if="this.selectTeam">
+                        <div><button style="margin-bottom: 5%" class="btn btn-outline-dark btn-lg" v-if="this.selectTeam" v-on:click=deleteTeam>Delete {{ selectTeam.name }}</button></div>
+                        Update Team name selected:
+                        <input type="text" placeholder="New name of the team" v-model="newNameTeam">
+                        <button style="margin-top: 2%" class="btn btn-outline-dark btn-lg" v-if="this.newNameTeam" v-on:click=updateTeam>Update "{{ selectTeam.name }}" to "{{ newNameTeam }}"</button> {{ updateTeamErr }}
+                    </div>
+                </div>
+            </div>
         </div>
+
     
         <div v-if="usersNotInTeam && selectTeam">
-            <select v-model="userToAdd">
+            <select class="form-control" v-model="userToAdd">
                 <option v-for="user in usersNotInTeam" :key="user.id" :value="user">{{user.email}}</option>
             </select>
-            <button v-if="this.userToAdd" v-on:click=addUserToSelectTeam>Add {{ userToAdd.email }} to team : "{{ selectTeam.name }}"</button>
+            <button class="btn btn-outline-dark btn-lg" v-if="this.userToAdd" v-on:click=addUserToSelectTeam>Add {{ userToAdd.email }} to team : "{{ selectTeam.name }}"</button>
         </div>
 
         <div v-if="usersInTeam && selectTeam">
-            <select v-model="userToDel">
+            <select class="form-control" v-model="userToDel">
                 <option v-for="user in usersInTeam" :key="user.id" :value="user">{{user.email}}</option>
             </select>
-            <button v-if="this.userToDel" v-on:click=delUserFromSelectTeam>Delete {{ userToDel.email }} from team : "{{ selectTeam.name }}"</button>
+            <button class="btn btn-outline-dark btn-lg" v-if="this.userToDel" v-on:click=delUserFromSelectTeam>Delete {{ userToDel.email }} from team : "{{ selectTeam.name }}"</button>
         </div>
 
-        <div>
+        <div style="display: none;">
             {{ selectTeam }} {{ listTeam }} {{ listTeamErr }}
         </div>
     
@@ -51,8 +79,8 @@ export default {
             .then(response => {
                 this.listTeam = null
                 if (response.data.data != null && response.data.data.length != 0)
-                    this.listTeam = response.data.data
-                this.listTeamErr = null
+                    this.listTeam = response.data.data;
+                this.listTeamErr = null;
             })
             .catch(err => {
                 this.listTeam = null
@@ -83,12 +111,14 @@ export default {
                     }
                 })
                 .then(response => {
-                    this.listTeamErr = null
-                    this.getListTeam()
+                    this.listTeamErr = null;
+                    this.getListTeam();
+                    this.alert = true;
                 })
                 .catch(err => {
                     this.listTeamErr = err.response.data
                 })
+
         },
         deleteTeam() {
             if (this.selectTeam.id != null) {
@@ -203,13 +233,52 @@ export default {
             userToAdd: null,
             usersInTeam: null,
             userToDel: null,
+            alert: false,
         }
     }
 }
 </script>
 
 <style scoped>
-.selectTeam {
-    width: 10%;
+#ManagerTeam {
+    text-align: center;
+    font-family: "DejaVu Math TeX Gyre";
+}
+
+#logo {
+    padding: 2%;
+    text-align: center;
+}
+
+.createTeam {
+    background-color: black;
+    padding: 5%;
+}
+
+.editTeam1 {
+    background-color: #9f9f9f;
+    padding: 5%;
+}
+
+.editTeam2 {
+    background-color: darkgrey;
+    padding: 5%;
+}
+
+.editTeam {
+    margin-top: 4%;
+}
+
+#btnTeam {
+    margin-top: 3%;
+}
+
+
+
+@media screen and (max-width: 708px)
+{
+    #logo img {
+        width: 30%;
+    }
 }
 </style>
