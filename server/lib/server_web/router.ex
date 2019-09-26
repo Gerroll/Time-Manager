@@ -66,6 +66,7 @@ defmodule ServerWeb.Router do
 
       get "/verifyToken", UserController, :verifyToken
       get "/user_list", UserController, :getUserList
+      post "/createUser", UserController, :createUser
       put "/updateRankUser", UserController, :updateRankUser
       get "/getListRank", UserController, :getListRank
       delete "/deleteUser", UserController, :deleteUser

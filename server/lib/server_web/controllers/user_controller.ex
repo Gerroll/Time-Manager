@@ -116,7 +116,7 @@ defmodule ServerWeb.UserController do
   def getListRank(conn, %{}) do
     conn
     |> put_status(:ok)
-    |> json(%{"list" => ["employee", "manager", "general"]})
+    |> json(%{"data" => ["employee", "manager", "general"]})
   end
 
   ### AUTH PART ###
