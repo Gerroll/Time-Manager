@@ -4,11 +4,11 @@ import Home from '@/components/Home'
 import Users from '@/components/Users'
 import General_Manager from "../components/General_Manager";
 import Manager from "../components/Manager";
-import CreateUser from '@/components/templateAPI/CreateUser'
 import Login from '@/components/templateAPI/Login'
 import UserInfo from '@/components/templateAPI/UserInfo'
 import UserHome from '@/components/templateAPI/UserHome'
 import UserUpdate from '@/components/templateAPI/UserUpdate'
+import Dashboard from '@/components/templateAPI/Dashboard'
 import ManagerTeam from '@/components/templateAPI/ManagerTeam'
 import ReportTIme from "../components/ReportTIme";
 import AccountSettings from "../components/AccountSettings";
@@ -135,6 +135,12 @@ export default new Router({
       path: '/manager/time-user',
       name: 'TimeUser',
       component: TimeUser
+    },
+    {
+      beforeEnter: UserGuard,
+      path: '/user/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
   ]
 })

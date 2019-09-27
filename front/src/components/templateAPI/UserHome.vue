@@ -5,7 +5,9 @@
         <div class="w3-xlarge">
 <div id="UserHome">
         <button v-if="this.manager" v-on:click=redirectManageTeam>Manage Teams</button>
+        <!-- <button v-on:click="this.$router.push('/dashboard')">Dashboard</button> -->
          &nbsp; &nbsp; &nbsp;
+        <a v-on:click="redirectDashboard">Dashboard</a>
         <i class="fa fa-user"><a v-on:click=redirectProfile>Profile</a></i> &nbsp;
         <i class="fa fa-refresh"><a v-on:click=getWorkingTime>RefreshWorkingTime</a></i> &nbsp;
         <i class="fa fa-close"><a v-on:click=logOut>LogOut</a></i> &nbsp; 
@@ -51,6 +53,9 @@ export default {
             })
     },
     methods: {
+        redirectDashboard() {
+            this.$router.push('/user/dashboard')
+        },
         redirectProfile() {
             this.$router.push('/user/profile')
         },
