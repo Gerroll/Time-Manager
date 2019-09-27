@@ -127,6 +127,8 @@ export default {
         createUser() {
             if (this.userToCreate.password != this.userToCreate.verifPass)
                 this.errCreateUser = "KO : passwords don't match"
+            else if (this.userToCreate.rank != null)
+                this.errCreateUser = "KO : please select rank"
             else
                 axios.post(process.env.ROOT_API + "/api/general/createUser", {
                     user: {
@@ -146,17 +148,15 @@ export default {
                 });
         },
         updateRankUser() {
-            console.log(this.updateUserId)
-            console.log(this.updateRank)
             axios.put(process.env.ROOT_API + "/api/general/updateRankUser", {
-                    user_id: this.updateUserId,
-                    rank: this.updateRank
+                    user_id: this.selectUser.id,
+                    rank: this.selectRank
                 })
                 .then(result => {
                     this.resUpdate = result.data.data
                     this.errUpdateUser = "user updated"
-                    this.updateUserId = null
-                    this.updateRank = null
+                    this.selectUser = null
+                    this.selectRank = null
                 })
                 .catch(err => {
                     this.errUpdateUser = err.response.data;
@@ -171,8 +171,8 @@ export default {
                 .then(res => {
                     this.deleteUser = res.data.data;
                     this.getUserList()
-                    this.updateUserId = null
-                    this.updateRank = null
+                    this.selectUser = null
+                    this.selectRank = null
                 })
                 .catch(err => {
                     this.errDeleteUser = err.response.data

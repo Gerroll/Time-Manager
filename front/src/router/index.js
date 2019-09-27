@@ -100,7 +100,7 @@ export default new Router({
       component: Users
     },
     {
-      beforeEnter: UserGuard,
+      beforeEnter: GeneralGuard,
       path: '/general-manager',
       name: 'GeneralManager',
       component: General_Manager
