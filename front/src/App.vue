@@ -1,24 +1,8 @@
 <template>
   <div id="app">
-    <div class="home">
-
-    </div>
-
     <router-view/>
-
-    <div id="town">
-      <img src="./assets/bulding.jpeg" alt="town"/>
-    </div>
-
-    <footer>
-      <div class="link">
-        <a class="nav-link" href="/users">Users</a>
-        <a class="nav-link" href="/manager">Manager</a>
-        <a class="nav-link" href="/general-manager">General Manager</a>
-      </div>
-
-      <p>© 2019 | Tous droits réservés. The Gotham town hall</p>
-    </footer>
+<notifications group="auth"/>
+<notifications group="app"/>
   </div>
 </template>
 

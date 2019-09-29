@@ -46,18 +46,20 @@
         </div>
 
     
-        <div v-if="usersNotInTeam && selectTeam">
+        <div v-if="usersNotInTeam && selectTeam" class="container mt-5">
+            Add user to "{{ selectTeam.name }}":
             <select class="form-control" v-model="userToAdd">
                 <option v-for="user in usersNotInTeam" :key="user.id" :value="user">{{user.email}}</option>
             </select>
             <button class="btn btn-outline-dark btn-lg" v-if="this.userToAdd" v-on:click=addUserToSelectTeam>Add {{ userToAdd.email }} to team : "{{ selectTeam.name }}"</button>
         </div>
 
-        <div v-if="usersInTeam && selectTeam">
+        <div v-if="usersInTeam && selectTeam" class="container mt-5">
+            Delete user of "{{ selectTeam.name }}":
             <select class="form-control" v-model="userToDel">
                 <option v-for="user in usersInTeam" :key="user.id" :value="user">{{user.email}}</option>
             </select>
-            <button class="btn btn-outline-dark btn-lg" v-if="this.userToDel" v-on:click=delUserFromSelectTeam>Delete {{ userToDel.email }} from team : "{{ selectTeam.name }}"</button>
+            <button class="btn btn-outline-dark btn-lg" v-if="this.userToDel" v-on:click=delUserFromSelectTeam>Delete {{ userToDel.email }} of team : "{{ selectTeam.name }}"</button>
         </div>
 
         <div style="display: none;">

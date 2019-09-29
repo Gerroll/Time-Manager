@@ -1,5 +1,7 @@
 <template>
     <div class="users">
+        <router-view/>
+
         <div id="logo">
             <img src="../assets/gotham.png" alt="logo" width="15%" />
         </div>
@@ -30,11 +32,10 @@
                 </div>
             </div>
         </div>
-    
 
     <!-- create part -->
         <div class="container w-25 mt-5">
-            <h3 class="mb-2" style="text-align: center">Créer un utilisateur</h3>
+            <h3 class="mb-2" style="text-align: center">Create a user</h3>
             <form v-on:submit.prevent="createUser()">
                 <div class="form-group">
                     <input type="email" class="form-control" placeholder="Enter email" v-model="userToCreate.email">

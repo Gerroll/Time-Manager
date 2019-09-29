@@ -50,7 +50,7 @@ defmodule ServerWeb.UserController do
       |> json("KO : email already link to an other account")
     else
       u = if user_params["username"], do: Map.put(%{}, "username", user_params["username"]), else: %{}
-      u = if user_params["password"], do: Map.put(u, "password", user_params["password"]), else: u
+      u = if user_params["password"], do: Map.put(u, "password", Bcrypt.hash_pwd_salt(user_params["password"])), else: u
       u = if user_params["email"], do: Map.put(u, "email", user_params["email"]), else: u
 
       with {:ok, %User{} = user} <- GUsers.update_user(user, u) do
