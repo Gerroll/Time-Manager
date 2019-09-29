@@ -127,7 +127,7 @@ export default {
         createUser() {
             if (this.userToCreate.password != this.userToCreate.verifPass)
                 this.errCreateUser = "KO : passwords don't match"
-            else if (this.userToCreate.rank != null)
+            else if (this.userToCreate.rank == null)
                 this.errCreateUser = "KO : please select rank"
             else
                 axios.post(process.env.ROOT_API + "/api/general/createUser", {

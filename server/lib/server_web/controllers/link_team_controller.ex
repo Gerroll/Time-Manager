@@ -3,7 +3,6 @@ defmodule ServerWeb.LinkTeamController do
 
   alias Server.GLinkTeams
   alias Server.GLinkTeams.LinkTeam
-  alias Server.GUsers
 
   action_fallback ServerWeb.FallbackController
 
