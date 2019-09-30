@@ -1,30 +1,6 @@
 <template>
     <div class="users">
-        <!-- <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">Time-Manager</a>
-            <div class="w3-xlarge">
-                <div id="UserHome">
-                    <button v-if="this.manager" v-on:click=redirectManageTeam>Manage Teams</button>
-                    &nbsp; &nbsp; &nbsp;
-                    <a v-on:click="redirectDashboard">Dashboard</a>
-                    <i class="fa fa-user"><a v-on:click=redirectProfile>Profile</a></i> &nbsp;
-                    <i class="fa fa-refresh"><a v-on:click=getWorkingTime>RefreshWorkingTime</a></i> &nbsp;
-                    <i class="fa fa-close"><a v-on:click=logOut>LogOut</a></i> &nbsp;
-    
-                    <div>{{ data }} {{ dataErr }}</div>
-                    <div>{{ workingTime }}{{ workingTimeErr }}</div>
-    
-                </div>
-            </div>
-        </nav> -->
         <router-view/>
-
-        <!-- <div class="div_form">
-            <form class="container form_user">
-                <a class="push_button white" v-on:click=clockIn>clockIn</a>
-                <a class="push_button gray" v-on:click=clockOut>clockOut</a>
-            </form>
-        </div> -->
     </div>
 </template>
 

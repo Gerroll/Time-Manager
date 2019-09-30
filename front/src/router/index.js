@@ -61,83 +61,6 @@ const GeneralGuard = (to, from, next) => {
 export default new Router({
   mode: 'history',
   routes: [
-    // {
-    //   path: '*',
-    //   redirect: '/login'
-    // },
-    // {
-    //   path: '/login',
-    //   component: Login
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/user/profile',
-    //   component: UserInfo
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/user/update',
-    //   component: UserUpdate
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/user/home',
-    //   component: UserHome
-    // },
-    // {
-    //   beforeEnter: ManagerGuard,
-    //   path: '/manager/team',
-    //   component: ManagerTeam
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/users',
-    //   name: 'Users',
-    //   component: Users
-    // },
-    // {
-    //   beforeEnter: GeneralGuard,
-    //   path: '/general-manager',
-    //   name: 'GeneralManager',
-    //   component: General_Manager
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/manager',
-    //   name: 'Manager',
-    //   component: Manager
-    // },
-    // {
-    //   path: '/users/report-time',
-    //   name: 'report-time',
-    //   component: ReportTIme
-    // },
-    // {
-    //   path: '/users/account-settings',
-    //   name: 'account-settings',
-    //   component: AccountSettings
-    // },
-    // {
-    //   path: '/manager',
-    //   name: 'Manager',
-    //   component: Manager
-    // },
-    // {
-    //   path: '/manager/time-team',
-    //   name: 'TimeTeam',
-    //   component: TimeTeam
-    // },
-    // {
-    //   path: '/manager/time-user',
-    //   name: 'TimeUser',
-    //   component: TimeUser
-    // },
-    // {
-    //   beforeEnter: UserGuard,
-    //   path: '/user/dashboard',
-    //   name: 'Dashboard',
-    //   component: Dashboard
-    // },
     {
       path: '/',
       component: TemplateIn,
@@ -197,11 +120,5 @@ export default new Router({
       path: '/login',
       component: Login
     },
-
-        // {
-    //   beforeEnter: ManagerGuard,
-    //   path: '/manager/team',
-    //   component: ManagerTeam
-    // },
   ]
 })
