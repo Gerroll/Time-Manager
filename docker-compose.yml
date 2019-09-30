@@ -1,9 +1,8 @@
-# Version of docker-compose
 version: '2'
 
 # Containers we are going to run
 services:
-  # Our Phoenix container
+  # Phoenix container
   phoenix:
     # The build parameters for this container.
     build:
@@ -15,7 +14,7 @@ services:
       PGPASSWORD: postgres
       PGDATABASE: server_dev
       PGPORT: 5432
-      # Hostname of our Postgres container
+      # Hostname of Postgres container
       PGHOST: db
     ports:
       # Mapping the port to make the Phoenix app accessible outside of the container
