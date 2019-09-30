@@ -16,12 +16,6 @@ defmodule ServerWeb.Router do
     plug Server.GeneralTokenPlug
   end
 
-  ### TMP ###
-  get "/listTeam", ServerWeb.TeamController, :index
-  get "/listLink", ServerWeb.LinkTeamController, :index
-  get "/user_list", ServerWeb.UserController, :getUserList
-  ### TMP ###
-
   scope "/api", ServerWeb do
     pipe_through :api
 
