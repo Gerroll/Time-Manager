@@ -61,8 +61,8 @@ export default {
             axios.get(process.env.ROOT_API + "/api/user/getDashboard", {})
                 .then(res => {
                     this.dashboardInfo = res.data
-                    this.dashboardInfo.averagePerDayOf7pastDay /= 3600
-                    this.dashboardInfo.averagePerWeekOf28pastDay /= 3600
+                    this.dashboardInfo.averagePerDayOf7pastDay = parseInt(this.dashboardInfo.averagePerDayOf7pastDay / 360) / 10
+                    this.dashboardInfo.averagePerWeekOf28pastDay = parseInt(this.dashboardInfo.averagePerWeekOf28pastDay / 360) / 10
                     Date.prototype.addDays = function(days) {
                         var date = new Date(this.valueOf());
                         date.setDate(date.getDate() + days);

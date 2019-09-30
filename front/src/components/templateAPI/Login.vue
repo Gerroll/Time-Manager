@@ -51,7 +51,7 @@ export default {
                     localStorage.setItem('token', response.data.token)
                     localStorage.setItem('rank', response.data.rank)
                     axios.defaults.headers.common['x-xsrf-token'] = response.data.token
-                    this.$router.push('/')
+                    this.$router.push('/dashboard')
                 })
                 .catch(err => {
                     this.loginErrMsg = err.response.data
